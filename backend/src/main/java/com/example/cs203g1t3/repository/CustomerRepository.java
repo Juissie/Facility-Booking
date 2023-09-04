@@ -1,5 +1,5 @@
 package com.example.cs203g1t3.repository;
 
-public interface CustomerRepository {
+public class CustomerRepository {
     
 }
