@@ -1,13 +1,19 @@
 package com.example.cs203g1t3.models;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.*;
+@Entity
 public class Account {
+
+    @Id @GeneratedValue
     private String userID;
     private String password;
     private boolean accountStatus;
     private LocalDateTime lastActive;
 
     private String name;
-    private Address address;
+    private String address;
     private String email;
     private String phoneNumber;
 
