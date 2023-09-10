@@ -1,18 +1,25 @@
 package com.example.cs203g1t3.models;
 
 import java.time.LocalDateTime;
-
 import org.springframework.data.annotation.*;
+import jakarta.annotation.Generated;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 @Entity
 public class Account {
 
-    @Id @GeneratedValue
+    @Id 
+    @Generated(value = { "Id" })
     private String userID;
+
+    
     private String password;
+    
     private boolean accountStatus;
     private LocalDateTime lastActive;
 
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
     private String address;
     private String email;
     private String phoneNumber;
