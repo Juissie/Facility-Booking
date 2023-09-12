@@ -11,7 +11,7 @@ import lombok.*;
 public class Customer extends Account{
     private int creditScore;
     private int noOfBookingsLeft;
-//    private boolean isMember;
+    private boolean isMember;
 
     // implement method
     public boolean makeBooking() {
