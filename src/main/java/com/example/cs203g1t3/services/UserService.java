@@ -30,8 +30,8 @@ public class UserService {
         }
     }
 
-    public User authenticate(String name, String password) {
-        Optional<User> user = userRepository.findByUsernameAndPassword(name, password);
-        return user.orElse(null);
-    }
+//    public User authenticate(String name, String password) {
+//        Optional<User> user = userRepository.findByUsernameAndPassword(name, password);
+//        return user.orElse(null);
+//    }
 }
