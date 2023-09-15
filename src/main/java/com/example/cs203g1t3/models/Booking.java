@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
-@Table
+@Table(name = "booking")
 @Getter
 @Setter
 @ToString
