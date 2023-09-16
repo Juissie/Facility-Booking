@@ -29,7 +29,7 @@ public class User{
      private Integer phoneNumber;
      private boolean accountStatus;
      private LocalDateTime lastActive;
-//
+
 //    //Variables to be used in the service later on
     private int creditScore;
     private int noOfBookingsLeft;

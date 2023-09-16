@@ -23,17 +23,18 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // public User registerCustomer(String username, String password, String email) {
-    //     if (username == null  || password == null) {
-    //         return null;
-    //     } else {
-    //         User customer = new User();
-    //         customer.setUsername(username);
-    //         customer.setPassword(password);
-    //         customer.setEmail(email);
-    //         return userRepository.save(customer);
-    //     }
-    // }
+    // Old implementation 
+        // public User registerCustomer(String username, String password, String email) {
+        //     if (username == null  || password == null) {
+        //         return null;
+        //     } else {
+        //         User customer = new User();
+        //         customer.setUsername(username);
+        //         customer.setPassword(password);
+        //         customer.setEmail(email);
+        //         return userRepository.save(customer);
+        //     }
+        // }
 
     public void registerUser(User user) {
         Optional<User> usernameOptional = userRepository.findByUsername(user.getUsername());

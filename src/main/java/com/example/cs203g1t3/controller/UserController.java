@@ -19,7 +19,8 @@ public class UserController {
         this.userService = us;
     }
 
-    // Testing to get users.
+    // Testing to get users -> Send a GET request here to check it's working.
+    // Or just use PostgreSQL
     @GetMapping("/users")
     public List<User> getUsers() {
         return userService.getUsers();
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public void registerNewUser(@RequestBody User user) {
+    public void registerUser(@RequestBody User user) {
         userService.registerUser(user);
     }
 
