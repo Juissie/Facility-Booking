@@ -1,13 +1,38 @@
 package com.example.cs203g1t3.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.util.List;
 
-@Controller
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.cs203g1t3.models.User;
+import com.example.cs203g1t3.services.UserService;
+
+@RestController
 public class UserController {
+
+    public UserService userService;
+
+    public UserController(UserService us) {
+        this.userService = us;
+    }
+
+    // Testing to get users.
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return userService.getUsers();
+    }
+
     @GetMapping("/register")
     public String getRegisterPage() {
         return "register_page";
+    }
+
+    @PostMapping("/register")
+    public void registerNewUser(@RequestBody User user) {
+        userService.registerUser(user);
     }
 
     @GetMapping("/login") 

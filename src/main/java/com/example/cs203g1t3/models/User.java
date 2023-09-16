@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "user", schema="public")
+@Table(name = "users", schema="public")
 @Getter
 @Setter
 @ToString
@@ -16,13 +16,13 @@ import lombok.*;
 public class User{
 
     @Id
-    @GeneratedValue//(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
 
 //    Login Details
     private String username;
     private String password;
-//
+
 //    //Other non-important identifiers
      private String address;
      private String email;
@@ -34,6 +34,11 @@ public class User{
     private int creditScore;
     private int noOfBookingsLeft;
     private boolean isMember;
+
+    public User(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
 
     // implement method
 //    public boolean makeBooking() {
