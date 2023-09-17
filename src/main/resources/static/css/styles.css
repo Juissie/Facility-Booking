@@ -4,22 +4,25 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: url(https://picsum.photos/3000/2000/?image=1015);
+    background: url("../images/background.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    
   }
   
-  body::before {
+  /* body::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
-    width: 25%;
+    width: 60%;
     height: 100%;
-    background-color: #03a9f4;
+    background-color: #f20505;
     opacity: 0.8;
-  }
+  } */
   
+  /* Form box itself */
   .form {
     position: absolute;
     top: 50%;
@@ -33,17 +36,20 @@ body {
     box-sizing: border-box;
   }
   
+  /* Create account */
   .form h2 {
     color: #777;
     margin: 0 0 40px;
     padding: 0;
   }
   
+  /* Between Username, Email and Password input boxes */
   .form .input-box {
     position: relative;
     margin: 20px 0;
   }
   
+  /* Between typing in input itself */
   .form .input-box input {
     width: 100%;
     font-size: 16px;
@@ -51,7 +57,7 @@ body {
     border-bottom: 2px solid #777;
     outline: none;
     padding: 10px;
-    padding-left: 30px;
+    padding-left: 10px;
     box-sizing: border-box;
     font-weight: bold;
     color: #777;
@@ -59,7 +65,7 @@ body {
   
   .form .input-box input:focus,
   .form .input-box input:valid {
-    border-bottom-color: #03a9f4;
+    border-bottom-color: #030bf4;
   }
   
   .form .input-box .fa {

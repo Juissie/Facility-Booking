@@ -1,5 +1,8 @@
 package com.example.cs203g1t3.repository;
 
-public class FacilityRepository {
+import com.example.cs203g1t3.models.Facility;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FacilityRepository extends JpaRepository<Facility, Long> {
     
 }
