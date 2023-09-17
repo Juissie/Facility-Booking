@@ -35,9 +35,10 @@ public class User{
     private int noOfBookingsLeft;
     private boolean isMember;
 
-    public User(String username, String email) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
+        this.password = password;
     }
 
     // implement method
