@@ -1,9 +1,17 @@
 package com.example.cs203g1t3.models;
-import java.time.LocalDateTime;
-import java.util.*;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collection;
+//import javax.validation.constraints.*;
+
 
 @Entity
 @Table(name = "users", schema="public")
@@ -13,7 +21,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class User{
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +29,12 @@ public class User{
 
 //    Login Details
     private String username;
+    @NonNull
+//    @Size(min = 8, message = "Password should be at least 8 characters")
     private String password;
+    @NotNull
+    // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
+    private String authorities;
 
 //    //Other non-important identifiers
      private String address;
@@ -35,10 +48,38 @@ public class User{
     private int noOfBookingsLeft;
     private boolean isMember;
 
-    public User(String username, String email, String password) {
+
+
+    public User(String username, String email, String password,String authorities) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.authorities = authorities;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Arrays.asList(new SimpleGrantedAuthority(authorities));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     // implement method

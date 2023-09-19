@@ -1,23 +1,25 @@
 package com.example.cs203g1t3.controller;
 
-import java.util.List;
-
+import com.example.cs203g1t3.models.User;
+import com.example.cs203g1t3.services.UserService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.example.cs203g1t3.models.User;
-import com.example.cs203g1t3.services.UserService;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     public UserService userService;
 
-    public UserController(UserService us) {
+    private BCryptPasswordEncoder encoder;
+
+    public UserController(UserService us,BCryptPasswordEncoder encoder) {
         this.userService = us;
+        this.encoder = encoder;
     }
 
     // Testing to get users -> Send a GET request here to check it's working.
@@ -34,6 +36,7 @@ public class UserController {
 
     @PostMapping("/register")
     public void registerUser(@RequestBody User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
         userService.registerUser(user);
     }
 
