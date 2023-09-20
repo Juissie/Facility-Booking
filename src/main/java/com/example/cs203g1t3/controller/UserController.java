@@ -4,13 +4,12 @@ import com.example.cs203g1t3.models.User;
 import com.example.cs203g1t3.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/")
 public class UserController {
 
     public UserService userService;
@@ -23,7 +22,7 @@ public class UserController {
     }
 
     // Testing to get users -> Send a GET request here to check it's working.
-    // Or just use PostgreSQL
+    // Or just use PostgresSQL
     @GetMapping("/users")
     public List<User> getUsers() {
         return userService.getUsers();

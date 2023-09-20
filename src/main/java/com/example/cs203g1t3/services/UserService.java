@@ -12,7 +12,7 @@ import java.util.Optional;
 public class UserService {
 
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     private BCryptPasswordEncoder encoder;
     
