@@ -2,6 +2,7 @@ package com.example.cs203g1t3.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -37,9 +38,10 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     //Add the security config here
-//                    auth.requestMatchers("/register/**","/login/**","/").permitAll();
-//                    auth.requestMatchers("/home").authenticated();
-                    auth.anyRequest().permitAll();
+                    auth.requestMatchers(HttpMethod.GET,"/login","/","/register").permitAll();
+                    auth.requestMatchers(HttpMethod.POST,"/login","/register").permitAll();
+                    auth.requestMatchers("/home").authenticated();
+//                    auth.anyRequest().permitAll();
                 })
                 .httpBasic(withDefaults())
                 .build();
