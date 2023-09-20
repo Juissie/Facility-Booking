@@ -38,10 +38,10 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     //Add the security config here
-                    auth.requestMatchers(HttpMethod.GET,"/login","/","/register").permitAll();
-                    auth.requestMatchers(HttpMethod.POST,"/login","/register").permitAll();
-                    auth.requestMatchers("/home").authenticated();
-//                    auth.anyRequest().permitAll();
+//                    auth.requestMatchers(HttpMethod.GET,"/login","/","/register").permitAll();
+//                    auth.requestMatchers(HttpMethod.POST,"/login","/register").permitAll();
+//                    auth.requestMatchers("/home").authenticated();
+                    auth.anyRequest().permitAll();
                 })
                 .httpBasic(withDefaults())
                 .build();
