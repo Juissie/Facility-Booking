@@ -1,4 +1,4 @@
-package com.example.cs203g1t3.security;
+package com.example.cs203g1t3.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
