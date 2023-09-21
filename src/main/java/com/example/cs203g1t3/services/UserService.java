@@ -1,9 +1,13 @@
 package com.example.cs203g1t3.services;
 
 import com.example.cs203g1t3.models.User;
+import com.example.cs203g1t3.DTO.LoginDTO;
+import com.example.cs203g1t3.DTO.UserDTO;
+import com.example.cs203g1t3.DTO.LoginResponse;
 import com.example.cs203g1t3.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -60,4 +64,26 @@ public class UserService {
 //        Optional<User> user = userRepository.findByUsernameAndPassword(name, password);
 //        return user.orElse(null);
 //    }
+
+    public LoginResponse loginUser(User user) {
+        User thisUser = userRepository.findByEmail(user.getEmail()).get();
+        if (thisUser != null) {
+            String password = user.getPassword();
+            String encodedPassword = thisUser.getPassword();
+            Boolean isPwdRight = encoder.matches(password, encodedPassword);
+            if (isPwdRight) {
+                Optional<User> employee = userRepository.findByEmailAndPassword(user.getEmail(), encodedPassword);
+                if (employee.isPresent()) {
+                    return new LoginResponse("Login Success", true);
+                } else {
+                    return new LoginResponse("Login Failed", false);
+                }
+            } else {
+                return new LoginResponse("password Not Match", false);
+            }
+        }else {
+            return new LoginResponse("Email not exits", false);
+        }
+    }
+
 }

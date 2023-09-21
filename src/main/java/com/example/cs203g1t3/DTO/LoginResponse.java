@@ -9,5 +9,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginResponse {
     String message;
-    String status;
+    Boolean status;
 }

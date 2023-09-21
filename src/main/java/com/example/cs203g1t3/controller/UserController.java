@@ -2,6 +2,11 @@ package com.example.cs203g1t3.controller;
 
 import com.example.cs203g1t3.models.User;
 import com.example.cs203g1t3.services.UserService;
+import com.example.cs203g1t3.DTO.UserDTO;
+import com.example.cs203g1t3.DTO.LoginDTO;
+import com.example.cs203g1t3.DTO.LoginResponse;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +50,11 @@ public class UserController {
         return "login_page";
     }
 
-
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User user)
+    {
+        LoginResponse loginResponse = userService.loginUser(user);
+        return ResponseEntity.ok(loginResponse);
+    }
 }
 

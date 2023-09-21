@@ -10,4 +10,5 @@ import com.example.cs203g1t3.models.User;
 public interface UserRepository extends JpaRepository<User, Long> {
    Optional<User> findByUsername(String username);
    Optional<User> findByEmail(String email);
+   Optional<User> findByEmailAndPassword(String username, String password);
 }
