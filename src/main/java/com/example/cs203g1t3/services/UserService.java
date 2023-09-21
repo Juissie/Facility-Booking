@@ -5,6 +5,10 @@ import com.example.cs203g1t3.DTO.LoginDTO;
 import com.example.cs203g1t3.DTO.UserDTO;
 import com.example.cs203g1t3.DTO.LoginResponse;
 import com.example.cs203g1t3.repository.UserRepository;
+
+import lombok.AllArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
 
@@ -20,6 +25,7 @@ public class UserService {
 
     private BCryptPasswordEncoder encoder;
     
+    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

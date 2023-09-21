@@ -114,6 +114,7 @@ function Register() {
         <button type="submit" class="btn btn-primary mt-4" onClick={save} >Register</button>
        
       </form>
+      <p className="mt-3">Already created an account? <a href="/login">Log in here</a></p>
     </div>
     </div>
      </div>

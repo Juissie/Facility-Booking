@@ -83,9 +83,11 @@ function Login() {
                   <button type="submit" class="btn btn-primary" onClick={login} >Login</button>
               </form>
 
-            </div>
-            </div>
-            </div>
+            <p className="mt-3">Don't have an account yet? <a href="/register">Create one here</a></p>
+          </div>
+
+        </div>
+      </div>
 
      </div>
     );
