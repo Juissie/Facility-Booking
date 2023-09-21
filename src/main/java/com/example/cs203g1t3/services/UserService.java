@@ -79,7 +79,7 @@ public class UserService {
                     return new LoginResponse("Login Failed", false);
                 }
             } else {
-                return new LoginResponse("password Not Match", false);
+                return new LoginResponse("Password does not match", false);
             }
         }else {
             return new LoginResponse("Email not exits", false);

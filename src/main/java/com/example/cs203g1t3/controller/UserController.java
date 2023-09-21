@@ -6,6 +6,7 @@ import com.example.cs203g1t3.DTO.UserDTO;
 import com.example.cs203g1t3.DTO.LoginDTO;
 import com.example.cs203g1t3.DTO.LoginResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ public class UserController {
 
     private BCryptPasswordEncoder encoder;
 
+    @Autowired
     public UserController(UserService us,BCryptPasswordEncoder encoder) {
         this.userService = us;
         this.encoder = encoder;
@@ -54,6 +56,7 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody User user)
     {
         LoginResponse loginResponse = userService.loginUser(user);
+        System.out.println("passed");
         return ResponseEntity.ok(loginResponse);
     }
 }

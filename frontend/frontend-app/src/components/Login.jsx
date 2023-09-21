@@ -34,7 +34,7 @@ function Login() {
              }
           }, fail => {
            console.error(fail); // Error!
-  });
+          });
         }
 
  
@@ -58,7 +58,7 @@ function Login() {
             <form>
         <div class="form-group">
           <label>Email</label>
-          <input type="email"  class="form-control" id="email" placeholder="Enter Name"
+          <input type="email"  class="form-control" id="email" placeholder="Enter Email"
           
           value={email}
           onChange={(event) => {
@@ -70,8 +70,8 @@ function Login() {
         </div>
 
         <div class="form-group">
-            <label>password</label>
-            <input type="password"  class="form-control" id="password" placeholder="Enter Fee"
+            <label>Password</label>
+            <input type="password"  class="form-control" id="password" placeholder="Enter Password"
             
             value={password}
             onChange={(event) => {
