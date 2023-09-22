@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class UserService {
 
 
@@ -26,8 +25,9 @@ public class UserService {
     private BCryptPasswordEncoder encoder;
     
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
     public List<User> getUsers() {
@@ -55,6 +55,9 @@ public class UserService {
         } else if (emailOptional.isPresent()) {
             throw new IllegalStateException("Email taken");
         }
+        //todo: to add when business logic is settled
+        user.setCreditScore(999);
+        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user); 
     }
 
