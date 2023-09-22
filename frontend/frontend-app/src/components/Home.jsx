@@ -32,7 +32,7 @@ function HomePage() {
                   <a
                     className="nav-link active"
                     aria-current="page"
-                    href="/logout"
+                    href="/login"
                   >
                     Logout
                   </a>

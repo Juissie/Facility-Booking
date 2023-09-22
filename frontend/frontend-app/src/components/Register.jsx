@@ -67,7 +67,7 @@ function Register() {
         </div>
 
         <div class="form-group">
-          <label>email</label>
+          <label>Email</label>
           <input type="email"  class="form-control" id="email" placeholder="Enter Email"
           
           value={email}

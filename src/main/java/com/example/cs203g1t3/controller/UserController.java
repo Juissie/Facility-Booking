@@ -21,12 +21,11 @@ public class UserController {
 
     public UserService userService;
 
-    private BCryptPasswordEncoder encoder;
+    // private BCryptPasswordEncoder encoder;
 
     @Autowired
-    public UserController(UserService us,BCryptPasswordEncoder encoder) {
+    public UserController(UserService us) {
         this.userService = us;
-        this.encoder = encoder;
     }
 
     // Testing to get users -> Send a GET request here to check it's working.
@@ -43,11 +42,10 @@ public class UserController {
 
     @PostMapping("/register")
     public void registerUser(@RequestBody User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
         userService.registerUser(user);
     }
 
-    @GetMapping("/login") 
+    @GetMapping("/login")
     public String getLoginPage() {
         return "login_page";
     }
