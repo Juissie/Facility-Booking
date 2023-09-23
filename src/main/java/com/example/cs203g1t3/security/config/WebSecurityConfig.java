@@ -61,9 +61,10 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     //Add the security config here
-                    auth.requestMatchers(HttpMethod.GET,"/login","/","/register").permitAll();
-                    auth.requestMatchers(HttpMethod.POST,"/login","/register").permitAll();
-                    auth.requestMatchers("/home").authenticated();
+                    auth.requestMatchers("/api/auth/register").permitAll();
+                    auth.requestMatchers("/api/auth/login").permitAll();
+                    auth.requestMatchers("/api/test/all").permitAll();
+//                    auth.requestMatchers("/home").authenticated();
                     auth.anyRequest().authenticated();
                 });
             http.authenticationProvider(authenticationProvider());

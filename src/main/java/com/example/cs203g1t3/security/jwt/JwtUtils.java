@@ -4,6 +4,7 @@ import com.example.cs203g1t3.services.CustomUserDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.hibernate.boot.jaxb.cfg.spi.JaxbCfgHibernateConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,8 +16,9 @@ import java.util.Date;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-//    @Value("${cs203g1t3.app.jwtSecret}")
-    private final String jwtSecret = System.getenv("jwt_secret_key_64");
+    private JaxbCfgHibernateConfiguration jHipsterProperties;
+    //    @Value("${cs203g1t3.app.jwtSecret}")
+    private final String jwtSecret = "======================BezKoder=Spring===========================";
 
 //    @Value("${cs203g1t3.app.jwtExpirationMs}")
     private final int jwtExpirationMs = 86400000;

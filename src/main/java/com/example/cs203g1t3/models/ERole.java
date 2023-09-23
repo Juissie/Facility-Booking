@@ -1,7 +1,8 @@
 package com.example.cs203g1t3.models;
 
 public enum ERole {
-        ROLE_USER,
-        ROLE_MODERATOR,
-        ROLE_ADMIN
+        ROLE_ADMIN,
+        ROLE_BOOKINGMANAGER, //        ROLE_MODERATOR,
+        ROLE_USER
+
 }
