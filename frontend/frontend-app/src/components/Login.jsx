@@ -20,15 +20,19 @@ function Login() {
             {
              console.log(res.data);
              
-             if (res.data.message == "Email not exits") 
+             if (res.data.message == "Email does not exist") 
              {
-               alert("Email not exits");
+               alert("Email does not exist");
              } 
              else if(res.data.message == "Login Success")
              { 
                 navigate('/home');
              } 
-              else 
+            else if(res.data.message == "Password does not match")
+             {
+                alert("Wrong password");
+             }
+            else
              { 
                 alert("Incorrect Email and Password not match");
              }
