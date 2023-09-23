@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Collection;
 //import javax.validation.constraints.*;
 
+import javax.validation.constraints.Email;
+
 
 @Entity
 @Table(name = "users", schema="public")
@@ -38,6 +40,7 @@ public class User implements UserDetails {
 
 //    //Other non-important identifiers
      private String address;
+     @Email
      private String email;
      private Integer phoneNumber;
      private boolean accountStatus;

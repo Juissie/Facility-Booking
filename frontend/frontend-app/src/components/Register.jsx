@@ -32,7 +32,7 @@ function Register() {
           alert("Registation Successfully");
           navigate('/login');
         } catch (err) {
-          alert(err);
+          alert("Username or email already used.");
         }
       }
   
