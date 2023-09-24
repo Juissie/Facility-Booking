@@ -55,6 +55,8 @@ public class UserService {
         } else if (emailOptional.isPresent()) {
             throw new IllegalStateException("Email taken");
         }
+        //todo: to add when business logic is settled
+        user.setCreditScore(999);
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user); 
     }
@@ -73,11 +75,12 @@ public class UserService {
 //    }
 
     public LoginResponse loginUser(User user) {
-        User thisUser = userRepository.findByEmail(user.getEmail()).get();
-        if (thisUser != null) {
+        Optional<User> thisUser = userRepository.findByEmail(user.getEmail());
+        if (thisUser.isPresent()) {
+            User currUser = thisUser.get();
             String password = user.getPassword();
-            String encodedPassword = thisUser.getPassword();
-            Boolean isPwdRight = encoder.matches(password,encodedPassword);
+            String encodedPassword = currUser.getPassword();
+            Boolean isPwdRight = encoder.matches(password, encodedPassword);
             if (isPwdRight) {
                 Optional<User> employee = userRepository.findByEmailAndPassword(user.getEmail(), encodedPassword);
                 if (employee.isPresent()) {
@@ -89,7 +92,7 @@ public class UserService {
                 return new LoginResponse("Password does not match", false);
             }
         }else {
-            return new LoginResponse("Email not exits", false);
+            return new LoginResponse("Email does not exist", false);
         }
     }
 
