@@ -10,16 +10,34 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordTouched, setPasswordTouched] = useState(false);
 
-    
-
     const navigate = useNavigate();
 
+    const isEmail = (email) => {
+      return String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
 
     async function save(event) {
         event.preventDefault();
 
+        if (username == "" || email == "" || password == "") {
+          alert("Cannot have enpty fields");
+          return;
+        } 
+
         if (password !== confirmPassword) {
           alert("Passwords do not match");
+          return;
+        }
+        if (!isEmail(email)) {
+          alert("Please enter a valid email");
+          return;
+        }
+        if (username.length != 9) {
+          alert("Please enter a valid NRIC");
           return;
         }
 
@@ -32,7 +50,7 @@ function Register() {
           alert("Registation Successfully");
           navigate('/login');
         } catch (err) {
-          alert(err);
+          alert("NRIC or email already exist");
         }
       }
   
@@ -55,8 +73,8 @@ function Register() {
     
     <form>
         <div class="form-group">
-          <label>Username</label>
-          <input type="text"  class="form-control" id="username" placeholder="Enter Username"
+          <label>NRIC</label>
+          <input type="text"  class="form-control" id="username" placeholder="Enter NRIC"
           
           value={username}
           onChange={(event) => {
