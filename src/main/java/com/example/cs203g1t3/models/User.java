@@ -7,9 +7,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 //import javax.validation.constraints.*;
 
 import javax.validation.constraints.Email;
@@ -23,7 +26,7 @@ import javax.validation.constraints.Email;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class User implements UserDetails {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +34,13 @@ public class User implements UserDetails {
 
 //    Login Details
     private String username;
-    @NonNull
+    @NotBlank
 //    @Size(min = 8, message = "Password should be at least 8 characters")
     private String password;
-    @NotNull
-    // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
-    private String authorities;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
 //    //Other non-important identifiers
      private String address;
@@ -53,37 +57,16 @@ public class User implements UserDetails {
 
 
 
-    public User(String username, String email, String password,String authorities) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.authorities = authorities;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority(authorities));
+    public Long getId() {
+        return userID;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
     // implement method
 //    public boolean makeBooking() {

@@ -21,7 +21,7 @@ public class UserController {
 
     public UserService userService;
 
-    // private BCryptPasswordEncoder encoder;
+//    private BCryptPasswordEncoder encoder;
 
     @Autowired
     public UserController(UserService us) {

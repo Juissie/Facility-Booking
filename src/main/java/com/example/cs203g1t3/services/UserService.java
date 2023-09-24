@@ -55,6 +55,8 @@ public class UserService {
         } else if (emailOptional.isPresent()) {
             throw new IllegalStateException("Email taken");
         }
+        //todo: to add when business logic is settled
+        user.setCreditScore(999);
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user); 
     }
