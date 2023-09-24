@@ -5,7 +5,7 @@ import axios from "axios";
 
 function Login() {
    
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
@@ -13,39 +13,23 @@ function Login() {
     async function login(event) {
         event.preventDefault();
         try {
-          await axios.post("http://localhost:8080/login", {
-            email: email,
+          await axios.post("http://localhost:8080/api/auth/login", {
+            username: username,
             password: password,
             }).then((res) => 
             {
              console.log(res.data);
-             
-             if (res.data.message == "Email does not exist") 
-             {
-               alert("Email does not exist");
-             } 
-             else if(res.data.message == "Login Success")
-             { 
-                navigate('/home');
-             } 
-            else if(res.data.message == "Password does not match")
-             {
-                alert("Wrong password");
-             }
-            else
-             { 
-                alert("Incorrect Email and Password not match");
-             }
-          }, fail => {
-           console.error(fail); // Error!
-          });
+             alert("Login Successful");
+             navigate("/home");
+            });
+          // }, fail => {
+          //  console.error(fail); // Error!
+          //  alert("Failed");
+          // });
         }
-
- 
          catch (err) {
-          alert(err);
+          alert("Wrong username or password");
         }
-      
       }
 
     return (
@@ -61,12 +45,12 @@ function Login() {
  
             <form>
         <div class="form-group">
-          <label>Email</label>
-          <input type="email"  class="form-control" id="email" placeholder="Enter Email"
+          <label>NRIC</label>
+          <input type="username"  class="form-control" id="username" placeholder="Enter NRIC"
           
-          value={email}
+          value={username}
           onChange={(event) => {
-            setEmail(event.target.value);
+            setUsername(event.target.value);
           }}
           
           />

@@ -42,15 +42,20 @@ function Register() {
         }
 
         try {
-          await axios.post("http://localhost:8080/register", {
+          await axios.post("http://localhost:8080/api/auth/register", {
           username: username,
           email: email,
           password: password,
-          });
+          }).then();
           alert("Registation Successfully");
           navigate('/login');
-        } catch (err) {
-          alert("NRIC or email already exist");
+        } catch (error) {
+          if (error.response && error.response.status === 400) {
+            const errorMessage = error.response.data.message; 
+            alert("Error Message:" + errorMessage);
+          } else {
+            console.error("Error:", error.message);
+          }
         }
       }
   
@@ -138,5 +143,6 @@ function Register() {
      </div>
     );
   }
+
   
   export default Register;
