@@ -40,6 +40,11 @@ function Register() {
           alert("Please enter a valid NRIC");
           return;
         }
+        const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*[a-zA-Z]).{8,}$/;
+        if (!passwordPattern.test(password)) {
+          alert("Password is not secure");
+          return;
+        }
 
         try {
           await axios.post("http://localhost:8080/api/auth/register", {

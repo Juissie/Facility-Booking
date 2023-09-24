@@ -37,8 +37,14 @@ function Login() {
           //  alert("Failed");
           // });
         }
-         catch (err) {
-          alert("Wrong username or password");
+        catch (error) {
+          console.log(error.response);
+          if (error.response && error.response.status === 400) {
+            const errorMessage = error.response.data.message; 
+            alert(errorMessage);
+          } else {
+            alert("Username or password does not exist.")
+          }
         }
       }
 
