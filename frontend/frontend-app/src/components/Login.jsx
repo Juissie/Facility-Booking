@@ -16,11 +16,21 @@ function Login() {
           await axios.post("http://localhost:8080/api/auth/login", {
             username: username,
             password: password,
-            }).then((res) => 
+            }).then((response) => 
             {
-             console.log(res.data);
-             alert("Login Successful");
-             navigate("/home");
+              const jwtResponse = {
+                accessToken: "Bearer " + response.data.accessToken,
+                id: response.data.id,
+                username: response.data.username,
+                email: response.data.email,
+                roles: response.data.roles, // Replace with the actual roles from your response
+              };
+              localStorage.setItem('jwtResponse', jwtResponse);
+              console.log('accessToken:', jwtResponse.accessToken);
+              console.log('Username:', jwtResponse.username);
+              console.log('Role:', jwtResponse.roles);
+              alert("Login Successful");
+              navigate("/home");
             });
           // }, fail => {
           //  console.error(fail); // Error!

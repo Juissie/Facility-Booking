@@ -1,6 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
+  const navigate = useNavigate();
+
+  // Logout function to remove the JWT token from localStorage
+  function logout() {
+    localStorage.removeItem('jwtResponse');
+    // Redirect to the login page or any other desired page
+    navigate('/login');
+  }
+
+  useEffect(() => {
+    // Check if the JWT token is present in localStorage
+    const jwtToken = localStorage.getItem('jwtResponse');
+
+    // If not authenticated, redirect to the login page
+    if (jwtToken == null) {
+      navigate('/login');
+    }
+  }, [navigate]);
   return (
     <html lang="en">
       <head>
@@ -32,6 +51,7 @@ function HomePage() {
                   <a
                     className="nav-link active"
                     aria-current="page"
+                    onClick={logout}
                     href="/login"
                   >
                     Logout
