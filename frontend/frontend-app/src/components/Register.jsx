@@ -12,39 +12,39 @@ function Register() {
 
     const navigate = useNavigate();
 
-    const isEmail = (email) => {
-      return String(email)
-        .toLowerCase()
-        .match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-    };
+    // const isEmail = (email) => {
+    //   return String(email)
+    //     .toLowerCase()
+    //     .match(
+    //       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    //     );
+    // };
 
     async function save(event) {
         event.preventDefault();
 
-        if (username == "" || email == "" || password == "") {
-          alert("Cannot have enpty fields");
-          return;
-        } 
+        // if (username == "" || email == "" || password == "") {
+        //   alert("Cannot have enpty fields");
+        //   return;
+        // } 
 
         if (password !== confirmPassword) {
           alert("Passwords do not match");
           return;
         }
-        if (!isEmail(email)) {
-          alert("Please enter a valid email");
-          return;
-        }
-        if (username.length != 9) {
-          alert("Please enter a valid NRIC");
-          return;
-        }
-        const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*[a-zA-Z]).{8,}$/;
-        if (!passwordPattern.test(password)) {
-          alert("Password is not secure");
-          return;
-        }
+        // if (!isEmail(email)) {
+        //   alert("Please enter a valid email");
+        //   return;
+        // }
+        // if (username.length != 9) {
+        //   alert("Please enter a valid NRIC");
+        //   return;
+        // }
+        // const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*[a-zA-Z]).{8,}$/;
+        // if (!passwordPattern.test(password)) {
+        //   alert("Password is not secure");
+        //   return;
+        // }
 
         try {
           await axios.post("http://localhost:8080/api/auth/register", {

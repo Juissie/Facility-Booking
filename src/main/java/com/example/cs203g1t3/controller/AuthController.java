@@ -86,7 +86,7 @@ public class AuthController {
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
-        if (jwtUtils.isValidPassword(signUpRequest.getPassword())) {
+        if (!jwtUtils.isValidPassword(signUpRequest.getPassword())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter a valid password!"));
         }
 
