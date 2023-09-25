@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.security.core.Authentication;
 import java.security.Key;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class JwtUtils {
@@ -59,6 +61,54 @@ public class JwtUtils {
         }
 
         return false;
+    }
+
+    public boolean isValidEmail(String email){
+        Pattern pattern = Pattern.compile("^(.+)@(gmail\\.com|yahoo\\.com)$");
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    public boolean isValidPassword(String password) {
+        // Check if the password is at least 8 characters long
+        if (password.length() < 8) {
+            return false;
+        }
+
+        // Check for at least one uppercase letter
+        Pattern uppercasePattern = Pattern.compile("[A-Z]");
+        Matcher uppercaseMatcher = uppercasePattern.matcher(password);
+
+        if (!uppercaseMatcher.find()) {
+            return false;
+        }
+
+        // Check for at least one lowercase letter
+        Pattern lowercasePattern = Pattern.compile("[a-z]");
+        Matcher lowercaseMatcher = lowercasePattern.matcher(password);
+
+        if (!lowercaseMatcher.find()) {
+            return false;
+        }
+
+        // Check for at least one digit (number)
+        Pattern digitPattern = Pattern.compile("[0-9]");
+        Matcher digitMatcher = digitPattern.matcher(password);
+
+        if (!digitMatcher.find()) {
+            return false;
+        }
+
+        // Check for at least one special character
+        Pattern specialCharacterPattern = Pattern.compile("[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]");
+        Matcher specialCharacterMatcher = specialCharacterPattern.matcher(password);
+
+        if (!specialCharacterMatcher.find()) {
+            return false;
+        }
+
+        // If all checks pass, the password is valid
+        return true;
     }
 
 }

@@ -1,0 +1,47 @@
+###
+GET http://localhost:8080/api/test/all
+Content-Type: application/json
+
+###
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "T0127510G",
+    "email": "jevontanjinghong@gmail.com",
+    "password": "Testing@123"
+}
+
+###
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "T1234567G",
+    "email": "jevontanjinghong@gmail.com",
+    "password": "Testing@123"
+}
+
+
+###
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "T1234567Q",
+    "email": "hehexd@gmail.com",
+    "password": "estin123"
+}
+
+
+
+
+
+POST http://localhost:8080/books/2/reviews
+Content-Type: application/json
+# User role
+Authorization: Basic gooduser:goodpassword
+
+{
+    "review": "Terrible book :)"
+}

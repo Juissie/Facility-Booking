@@ -57,7 +57,8 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Account does not exist!"));
         }
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+                        loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -67,18 +68,28 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         return ResponseEntity
-                .ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+                .ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(),
+                        roles));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        if (signUpRequest.getUsername().length() != 9) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter valid username!"));
+        }
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
         }
-
+        if (!jwtUtils.isValidEmail(signUpRequest.getEmail())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter a valid email!"));
+        }
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
+        if (jwtUtils.isValidPassword(signUpRequest.getPassword())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter a valid password!"));
+        }
+
 
         // Create new user's account
         User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
