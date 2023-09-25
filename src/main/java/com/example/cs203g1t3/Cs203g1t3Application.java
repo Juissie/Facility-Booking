@@ -8,6 +8,7 @@ public class Cs203g1t3Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Cs203g1t3Application.class, args);
+		
 	}
 
 }
