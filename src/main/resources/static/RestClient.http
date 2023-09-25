@@ -1,40 +1,100 @@
-###
+###Show 
 GET http://localhost:8080/api/test/all
 Content-Type: application/json
 
-###
+
+### Invalid username
 POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "T0127510G",
-    "email": "jevontanjinghong@gmail.com",
-    "password": "Testing@123"
-}
-
-###
-POST http://localhost:8080/api/auth/register
-Content-Type: application/json
-
-{
-    "username": "T1234567G",
+    "username": "T1234567",
     "email": "jevontanjinghong@gmail.com",
     "password": "Testing@123"
 }
 
 
-###
+### Invalid email
 POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
 {
     "username": "T1234567Q",
-    "email": "hehexd@gmail.com",
+    "email": "hehexdil.com",
     "password": "estin123"
 }
 
 
+### proper register user / username is taken
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
 
+{
+    "username": "T1234467Q",
+    "email": "hehe@gmail.com",
+    "password": "Pass1234!"
+}
+
+### email taken
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "Z9835241A",
+    "email": "hehe@gmail.com",
+    "password": "Pass1234!"
+}
+
+### Cannot access user resources
+GET http://localhost:8080/api/test/user
+Content-Type: application/json
+
+{
+
+
+}
+
+
+### Login successful
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "T1234467Q",
+    "password": "Pass1234!"
+}
+
+### Authentication success
+GET http://localhost:8080/api/test/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUMTIzNDQ2N1EiLCJpYXQiOjE2OTU2MzI5MDgsImV4cCI6MTY5NTcxOTMwOH0.oudhqvlzAj1xN9I8kgglmEzIZ4HGeCNRgX9UnyUdrkg
+
+{
+
+
+}
+
+### Register booking manager
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "Z9835241A",
+    "email": "zqqzzq@gmail.com",
+    "password": "Pass1234!",
+    "role": ["bookingManager"]
+}
+
+
+
+### Login booking manager
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "Z9835241A",
+    "password": "Pass1234!"
+}
 
 
 POST http://localhost:8080/books/2/reviews
