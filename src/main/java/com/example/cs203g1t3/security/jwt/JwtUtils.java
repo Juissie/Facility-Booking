@@ -111,4 +111,31 @@ public class JwtUtils {
         return true;
     }
 
+    public boolean isValidNric(String nric) {
+        // Check if the NRIC is in the correct format
+        Pattern pattern = Pattern.compile("^[STFG]\\d{7}[A-Z]$");
+        Matcher matcher = pattern.matcher(nric);
+
+        if (!matcher.matches()) {
+            return false;
+        }
+
+        // Extract the first character (S/T/F/G)
+        char firstChar = nric.charAt(0);
+
+        // Extract the numeric part of the NRIC
+        int numericPart = Integer.parseInt(nric.substring(1, 8));
+
+        // Define the checksum letters for the first character
+        char[] checksumLetters = "JZIHGFEDCBA".toCharArray();
+
+        // Calculate the checksum based on the first character
+        int checksum = (firstChar == 'T' || firstChar == 'G') ? 4 : 0;
+        checksum += (numericPart % 10) * 2;
+
+        // Check if the NRIC is valid by comparing the calculated checksum with the actual checksum letter
+        return nric.charAt(8) == checksumLetters[checksum % 11];
+    }
+
+
 }

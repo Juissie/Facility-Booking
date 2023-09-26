@@ -74,7 +74,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (signUpRequest.getUsername().length() != 9) {
+        if (!jwtUtils.isValidNric(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter valid username!"));
         }
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -89,6 +89,7 @@ public class AuthController {
         if (!jwtUtils.isValidPassword(signUpRequest.getPassword())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter a valid password!"));
         }
+
 
 
         // Create new user's account
