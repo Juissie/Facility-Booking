@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
   const navigate = useNavigate();
+  const token = localStorage.getItem('jwtResponse');
+  const username = JSON.parse(token);
 
   // Logout function to remove the JWT token from localStorage
   function logout() {
@@ -65,7 +67,7 @@ function HomePage() {
         <br />
         <div className="container">
           <div className="row">
-            <h1>Welcome to the facility booking page</h1>
+            <h1>Welcome to the facility booking page, {username.username}</h1>
           </div>
         </div>
       </body>
