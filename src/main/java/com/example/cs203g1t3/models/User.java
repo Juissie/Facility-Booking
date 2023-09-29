@@ -23,7 +23,6 @@ import javax.validation.constraints.Email;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 public class User{
