@@ -8,9 +8,9 @@ function Profile() {
   // Retrieve the jwtResponse from localStorage
   //const jwtResponse = JSON.parse(localStorage.getItem('jwtResponse'));
   const jwtResponse = {
-    username: 'JohnDoe',
-    email: 'johndoe@example.com',
-    roles: ['User'],
+    username: 'Hirai Momo',
+    email: 'Momo@Twice.com',
+    roles: ['Main Dancer'],
     profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQOzLVWtuIaOlLcxtYyFdnQVDUHcGKTaCRQ&usqp=CAU', // Replace with your dummy roles
   };
 
