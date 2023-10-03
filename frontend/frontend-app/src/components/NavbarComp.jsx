@@ -4,6 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link } from 'react-router-dom';
+
+// Sample profile picture URL (replace with your actual URL)
+const userProfilePicture = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQOzLVWtuIaOlLcxtYyFdnQVDUHcGKTaCRQ&usqp=CAU';
+const profilePictureStyle = {
+  maxWidth: '40px', // Set the maximum width of the image
+  maxHeight: '40px', // Set the maximum height of the image
+};
 
 function MyNavbar() {
   const navigate = useNavigate();
@@ -14,15 +22,6 @@ function MyNavbar() {
     // Redirect to the login page or any other desired page
     navigate('/login');
   }
-  // useEffect(() => {
-  //   // Check if the JWT token is present in localStorage
-  //   const jwtToken = localStorage.getItem('jwtResponse');
-
-  //   // If not authenticated, redirect to the login page
-  //   if (jwtToken == null) {
-  //     navigate('/login');
-  //   }
-  // }, [navigate]);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -31,7 +30,7 @@ function MyNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link as={Link} to="/home">Home</Nav.Link> {/* Use Link for "Home" */}
             <Nav.Link href="#link">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -44,10 +43,15 @@ function MyNavbar() {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
-          </Nav>
-          {/* Add the Logout button here */}
+            </Nav>
+          {/* Profile button with dropdown */}
           <Nav>
-            <Nav.Link onClick={logout}>Logout</Nav.Link>
+          <NavDropdown title={<img src={userProfilePicture} alt="Profile" style={profilePictureStyle} />} id="basic-nav-dropdown">
+          <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item> {/* Link to the "Profile" route */}
+              <NavDropdown.Item href="#settings">Settings</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
