@@ -43,17 +43,17 @@ public class User{
     private Set<Role> roles = new HashSet<>();
 
 //    //Other non-important identifiers
-     private String address;
+//     private String address;
      @Email
      private String email;
-     private Integer phoneNumber;
-     private boolean accountStatus;
-     private LocalDateTime lastActive;
+//     private Integer phoneNumber;
+//     private boolean accountStatus;
+//     private LocalDateTime lastActive;
 
 //    //Variables to be used in the service later on
     private int creditScore;
-    private int noOfBookingsLeft;
-    private boolean isMember;
+//    private int noOfBookingsLeft;
+//    private boolean isMember;
 
 
 

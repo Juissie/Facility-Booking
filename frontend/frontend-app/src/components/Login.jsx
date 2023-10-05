@@ -25,7 +25,7 @@ function Login() {
                 email: response.data.email,
                 roles: response.data.roles, // Replace with the actual roles from your response
               };
-              localStorage.setItem('jwtResponse', jwtResponse);
+              localStorage.setItem('jwtResponse', JSON.stringify(jwtResponse));
               console.log('accessToken:', jwtResponse.accessToken);
               console.log('Username:', jwtResponse.username);
               console.log('Role:', jwtResponse.roles);

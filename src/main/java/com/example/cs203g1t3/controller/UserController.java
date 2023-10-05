@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/")
+@RequestMapping("/api/user")
 public class UserController {
 
     public UserService userService;
@@ -30,9 +30,10 @@ public class UserController {
 
     // Testing to get users -> Send a GET request here to check it's working.
     // Or just use PostgresSQL
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return userService.getUsers();
+    @GetMapping("/details/{userId}")
+    public ResponseEntity<?> getUserProfile(@PathVariable Long userId) {
+        User user = userService.getUser(userId);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/register")

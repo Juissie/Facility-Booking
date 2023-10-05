@@ -34,6 +34,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUser(Long userId) {
+        // You can use your UserRepository or any data access method to fetch the user by userId
+        Optional<User> user = userRepository.findById(userId);
+        return user.get();
+    }
+
     // Old implementation 
         // public User registerCustomer(String username, String password, String email) {
         //     if (username == null  || password == null) {
