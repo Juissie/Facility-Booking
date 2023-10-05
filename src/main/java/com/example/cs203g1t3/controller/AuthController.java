@@ -113,9 +113,9 @@ public class AuthController {
 
                         break;
                     case "bookingManager":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_BOOKINGMANAGER)
+                        Role bookingManagerRole = roleRepository.findByName(ERole.ROLE_BOOKINGMANAGER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(modRole);
+                        roles.add(bookingManagerRole);
 
                         break;
                     default:
