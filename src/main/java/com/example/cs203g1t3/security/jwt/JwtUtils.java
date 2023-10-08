@@ -1,9 +1,12 @@
 package com.example.cs203g1t3.security.jwt;
 
+import com.example.cs203g1t3.models.User;
+import com.example.cs203g1t3.services.CustomUserDetailService;
 import com.example.cs203g1t3.services.CustomUserDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Value;
 import org.hibernate.boot.jaxb.cfg.spi.JaxbCfgHibernateConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,29 +20,41 @@ import java.util.regex.Pattern;
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+//    @Value("${facilityBooking.app.jwtSecret}")
+    private final String jwtSecret = "2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D";
 
-    private JaxbCfgHibernateConfiguration jHipsterProperties;
-    //    @Value("${cs203g1t3.app.jwtSecret}")
-    private final String jwtSecret = "======================BezKoder=Spring===========================";
+    private final long jwtExpirationMs = 60000L;
 
-//    @Value("${cs203g1t3.app.jwtExpirationMs}")
-    private final int jwtExpirationMs = 86400000;
+//    public String generateJwtToken(Authentication authentication) {
+//
+//        CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
+//
+//        return Jwts.builder()
+//                .setSubject((userPrincipal.getUsername()))
+//                .setIssuedAt(new Date())
+//                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+//                .signWith(key(), SignatureAlgorithm.HS256)
+//                .compact();
+//    }
 
-    public String generateJwtToken(Authentication authentication) {
-
-        CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
-
-        return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key(), SignatureAlgorithm.HS256)
-                .compact();
+    public String generateJwtToken(CustomUserDetails userPrincipal) {
+        return generateTokenFromUsername(userPrincipal.getUsername());
     }
 
     private Key key() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
+
+    public String generateTokenFromUsername(String username) {
+        return Jwts.builder().setSubject(username).setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .signWith(key(),SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+//    public String getUserNameFromJwtToken(String token) {
+//        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+//    }
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key()).build()

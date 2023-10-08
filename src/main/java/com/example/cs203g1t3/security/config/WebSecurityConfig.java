@@ -64,7 +64,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/api/auth/register").permitAll();
                     auth.requestMatchers("/api/auth/login").permitAll();
                     auth.requestMatchers("/api/test/all").permitAll();
-//                    auth.requestMatchers("/home").authenticated();
+                    auth.requestMatchers("/api/auth/refreshtoken").permitAll();
                     auth.anyRequest().authenticated();
                 });
             http.authenticationProvider(authenticationProvider());
