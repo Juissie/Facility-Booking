@@ -96,12 +96,32 @@ Content-Type: application/json
     "password": "Pass1234!"
 }
 
-
-POST http://localhost:8080/books/2/reviews
+### Register admin
+POST http://localhost:8080/api/auth/register
 Content-Type: application/json
-# User role
-Authorization: Basic gooduser:goodpassword
 
 {
-    "review": "Terrible book :)"
+    "username": "S8217079D",
+    "email": "aqqzzq@gmail.com",
+    "password": "Pass1234!",
+    "role": ["admin"]
+}
+
+### Login admin
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "S8217079D",
+    "password": "Pass1234!"
+}
+
+### Add facility
+POST http://localhost:8080/api/facilities
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTODIxNzA3OUQiLCJpYXQiOjE2OTYzMTk3NTQsImV4cCI6MTY5NjQwNjE1NH0.XyDtGgn27qKwWqRZZDKIIxYO4qC-dzytvIK5EKEDF28
+
+{
+    "facilityType": "FacilityOne",
+    "description": "Default Description"
 }
