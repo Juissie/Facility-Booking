@@ -28,11 +28,11 @@ public class FacilityController {
     private FacilityService facilityService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> createFacility(@RequestBody Facility facility) {
         Facility newFacility = facilityService.createFacility(facility);
         return new ResponseEntity<>(newFacility, HttpStatus.CREATED);
-    }
+    }    
 
     @GetMapping
     public ResponseEntity<List<Facility>> getAllFacilities() {
