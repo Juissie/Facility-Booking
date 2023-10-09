@@ -30,7 +30,8 @@ function MyNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-          <Nav.Link as={Link} to="/facilites">Facilites</Nav.Link> {/* Use Link for "Home" */}
+          <Nav.Link as={Link} to="/facilities">Facilities</Nav.Link> {/* Use Link for "Home" */}
+          <Nav.Link as={Link} to="/create-facility">Create Facility</Nav.Link> {/* New link for creating a facility */}
             {/* <Nav.Link href="/booking">Make a Booking</Nav.Link> */}
             <NavDropdown title="Booking Details" id="basic-nav-dropdown">
               <NavDropdown.Item href="/bookings">Past Bookings</NavDropdown.Item>

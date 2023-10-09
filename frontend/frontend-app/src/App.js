@@ -4,6 +4,8 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import WelcomePage from "./components/Welcomepage";
 import Profile from "./components/Profile";
+import CreateFacility from './components/CreateFacility';
+import FacilityList from "./components/Facilities";
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/create-facility" element={<CreateFacility />} /> 
+          <Route path="/facilities" element={<FacilityList />} />
         </Routes>
       </BrowserRouter>
     </div>

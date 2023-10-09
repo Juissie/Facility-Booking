@@ -11,42 +11,37 @@ function Login() {
 
 
     async function login(event) {
-        event.preventDefault();
-        try {
-          await axios.post("http://localhost:8080/api/auth/login", {
-            username: username,
-            password: password,
-            }).then((response) => 
-            {
-              const jwtResponse = {
-                accessToken: "Bearer " + response.data.accessToken,
-                id: response.data.id,
-                username: response.data.username,
-                email: response.data.email,
-                roles: response.data.roles, // Replace with the actual roles from your response
-              };
-              localStorage.setItem('jwtResponse', JSON.stringify(jwtResponse));
-              console.log('accessToken:', jwtResponse.accessToken);
-              console.log('Username:', jwtResponse.username);
-              console.log('Role:', jwtResponse.roles);
-              alert("Login Successful");
-              navigate("/home");
-            });
-          // }, fail => {
-          //  console.error(fail); // Error!
-          //  alert("Failed");
-          // });
-        }
-        catch (error) {
-          console.log(error.response);
-          if (error.response && error.response.status === 400) {
-            const errorMessage = error.response.data.message; 
-            alert(errorMessage);
-          } else {
-            alert("Username or password does not exist.")
-          }
+      event.preventDefault();
+      try {
+        await axios.post("http://localhost:8080/api/auth/login", {
+          username: username,
+          password: password,
+        }).then((response) => {
+          const jwtResponse = {
+            accessToken: "Bearer " + response.data.accessToken,
+            id: response.data.id,
+            username: response.data.username,
+            email: response.data.email,
+            roles: response.data.roles, // Replace with the actual roles from your response
+          };
+          localStorage.setItem('jwtResponse', JSON.stringify(jwtResponse));
+          console.log('accessToken:', jwtResponse.accessToken);
+          console.log('Username:', jwtResponse.username);
+          console.log('Role:', jwtResponse.roles);
+          alert("Login Successful");
+          navigate("/home");
+        });
+      } catch (error) {
+        console.log(error.response);
+        if (error.response && error.response.status === 400) {
+          const errorMessage = error.response.data.message; 
+          alert(errorMessage);
+        } else {
+          alert("Username or password does not exist.")
         }
       }
+    }
+    
 
     return (
        <div>

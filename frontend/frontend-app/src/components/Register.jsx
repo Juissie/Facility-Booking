@@ -21,48 +21,50 @@ function Register() {
     // };
 
     async function save(event) {
-        event.preventDefault();
-
-        // if (username == "" || email == "" || password == "") {
-        //   alert("Cannot have enpty fields");
-        //   return;
-        // } 
-
-        if (password !== confirmPassword) {
-          alert("Passwords do not match");
-          return;
-        }
-        // if (!isEmail(email)) {
-        //   alert("Please enter a valid email");
-        //   return;
-        // }
-        // if (username.length != 9) {
-        //   alert("Please enter a valid NRIC");
-        //   return;
-        // }
-        // const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*[a-zA-Z]).{8,}$/;
-        // if (!passwordPattern.test(password)) {
-        //   alert("Password is not secure");
-        //   return;
-        // }
-
-        try {
-          await axios.post("http://localhost:8080/api/auth/register", {
+      event.preventDefault();
+    
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+    
+      try {
+        // Register the user
+        await axios.post("http://localhost:8080/api/auth/register", {
           username: username,
           email: email,
           password: password,
-          }).then();
-          alert("Registation Successfully");
-          navigate('/login');
-        } catch (error) {
-          if (error.response && error.response.status === 400) {
-            const errorMessage = error.response.data.message; 
-            alert("Error Message:" + errorMessage);
-          } else {
-            console.error("Error:", error.message);
-          }
+        });
+    
+        // Log in the user immediately after registration
+        await axios.post("http://localhost:8080/api/auth/login", {
+          username: username,
+          password: password,
+        }).then((response) => {
+          const jwtResponse = {
+            accessToken: "Bearer " + response.data.accessToken,
+            id: response.data.id,
+            username: response.data.username,
+            email: response.data.email,
+            roles: response.data.roles, // Replace with the actual roles from your response
+          };
+          localStorage.setItem('jwtResponse', JSON.stringify(jwtResponse));
+          console.log('accessToken:', jwtResponse.accessToken);
+          console.log('Username:', jwtResponse.username);
+          console.log('Role:', jwtResponse.roles);
+          alert("Registration and Login Successful");
+          navigate("/home");
+        });
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          const errorMessage = error.response.data.message; 
+          alert("Error Message:" + errorMessage);
+        } else {
+          console.error("Error:", error.message);
         }
       }
+    }
+    
   
       function validatePassword(password) {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
