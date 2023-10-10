@@ -24,12 +24,10 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     @Override
     public void run(String...args) {
-        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN).orElse(null);
-        if (adminRole == null) {
-            adminRole = new Role(ERole.ROLE_ADMIN);
-            roleRepository.save(adminRole);
-        }
 
+        // Initialize user with admin role
+        Role adminRole = new Role(ERole.ROLE_ADMIN);
+        roleRepository.save(adminRole);
 
         String encodedPassword = passwordEncoder.encode("Pass1234!");
         Set<Role> roles = new HashSet<>();
