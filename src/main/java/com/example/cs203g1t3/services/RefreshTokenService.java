@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RefreshTokenService {
-//    @Value("${bezkoder.app.jwtRefreshExpirationMs}")
-    private final Long refreshTokenDurationMs = 120000L;
+
+    private final Long refreshTokenDurationMs = 86400000L;
 
     @Autowired
     private RefreshTokenRepository refreshTokenRepository;

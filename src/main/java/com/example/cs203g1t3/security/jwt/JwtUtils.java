@@ -23,7 +23,7 @@ public class JwtUtils {
 //    @Value("${facilityBooking.app.jwtSecret}")
     private final String jwtSecret = "2D4A614E645267556B58703273357638792F423F4428472B4B6250655368566D";
 
-    private final long jwtExpirationMs = 60000L;
+    private final long jwtExpirationMs = 86400000L;
 
 //    public String generateJwtToken(Authentication authentication) {
 //

@@ -9,6 +9,7 @@ import com.example.cs203g1t3.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class UserService {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
-
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getUser(Long userId) {
         // You can use your UserRepository or any data access method to fetch the user by userId
         Optional<User> user = userRepository.findById(userId);
