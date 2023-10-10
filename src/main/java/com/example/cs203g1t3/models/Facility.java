@@ -1,6 +1,7 @@
 package com.example.cs203g1t3.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,10 +35,10 @@ public class Facility {
     @GeneratedValue (strategy =  GenerationType.IDENTITY)
     private Long facilityId;
     private String facilityType;
-    @Column(columnDefinition = "TIMESTAMP")
-    private LocalDateTime openTime;
-    @Column(columnDefinition = "TIMESTAMP")
-    private LocalDateTime endTime;
+    @Column(columnDefinition = "TIME")
+    private LocalTime openTime;
+    @Column(columnDefinition = "TIME")
+    private LocalTime endTime;
     private boolean isCurrentlyBooked;
     private String description;
 
