@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -15,6 +15,15 @@ const profilePictureStyle = {
 
 function MyNavbar() {
   const navigate = useNavigate();
+  const [userRoles, setUserRoles] = useState([]);
+
+  useEffect(() => {
+    // Fetch user roles from local storage
+    const jwtResponse = JSON.parse(localStorage.getItem('jwtResponse'));
+    if (jwtResponse && jwtResponse.roles) {
+      setUserRoles(jwtResponse.roles);
+    }
+  }, []);
 
   // Logout function to remove the JWT token from localStorage
   function logout() {
@@ -30,22 +39,20 @@ function MyNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-          <Nav.Link as={Link} to="/facilities">Facilities</Nav.Link> {/* Use Link for "Home" */}
-          <Nav.Link as={Link} to="/create-facility">Create Facility</Nav.Link> {/* New link for creating a facility */}
-            {/* <Nav.Link href="/booking">Make a Booking</Nav.Link> */}
+            <Nav.Link as={Link} to="/facilities">Facilities</Nav.Link>
+            {userRoles.includes('ROLE_ADMIN') && (
+              <Nav.Link as={Link} to="/create-facility">Create Facility</Nav.Link>
+            )}
             <NavDropdown title="Booking Details" id="basic-nav-dropdown">
               <NavDropdown.Item href="/bookings">Past Bookings</NavDropdown.Item>
               <NavDropdown.Item href="/bookings">Upcoming Bookings</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/facilites">
-                Book a facility
-              </NavDropdown.Item>
+              <NavDropdown.Item href="/facilites">Book a facility</NavDropdown.Item>
             </NavDropdown>
-            </Nav>
-          {/* Profile button with dropdown */}
+          </Nav>
           <Nav>
-          <NavDropdown title={<img src={userProfilePicture} alt="Profile" style={profilePictureStyle} />} id="basic-nav-dropdown">
-          <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item> {/* Link to the "Profile" route */}
+            <NavDropdown title={<img src={userProfilePicture} alt="Profile" style={profilePictureStyle} />} id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/profile">Profile</NavDropdown.Item>
               <NavDropdown.Item href="#settings">Settings</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
