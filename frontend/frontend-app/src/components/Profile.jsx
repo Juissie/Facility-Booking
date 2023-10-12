@@ -19,9 +19,9 @@ function Profile() {
         });
       }
 
-      console.log(jwtResponse.accessToken)
+      // console.log(jwtResponse.accessToken)
 
-      const userId = 2;
+      const userId = jwtResponse.id;
       axios.get(`http://localhost:8080/api/user/details/${userId}`,
           { headers:
                 {
