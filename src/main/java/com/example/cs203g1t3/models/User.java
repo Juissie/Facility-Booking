@@ -9,10 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 //import javax.validation.constraints.*;
 
 import javax.validation.constraints.Email;
@@ -55,7 +52,12 @@ public class User{
 //    private int noOfBookingsLeft;
 //    private boolean isMember;
 
-
+    //Email OTP variables
+    private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
+    @Column(name = "one_time_password")
+    private String oneTimePassword;
+    @Column(name = "otp_requested_time")
+    private Date otpRequestedTime;
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -67,6 +69,22 @@ public class User{
         return userID;
     }
 
+    public boolean isOTPRequired() {
+        if (this.getOneTimePassword() == null) {
+            return false;
+        }
+
+        long currentTimeInMillis = System.currentTimeMillis();
+        long otpRequestedTimeInMillis = this.otpRequestedTime.getTime();
+
+        if (otpRequestedTimeInMillis + OTP_VALID_DURATION < currentTimeInMillis) {
+            // OTP expires
+            return false;
+        }
+
+        return true;
+    }
+
 
     // implement method
 //    public boolean makeBooking() {
@@ -76,13 +94,6 @@ public class User{
 //    // implement method
 //    public List<Booking> listBooking() {
 //        return null;
-//    }
-
-//    @Override
-//    // Password omitted
-//    public String toString() {
-//        return "Account [userID=" + userID + ", accountStatus=" + accountStatus + ", lastActive=" + lastActive
-//                + ", name=" + username + ", address=" + address + ", email=" + email + ", phoneNumber=" + phoneNumber + "]";
 //    }
     
 }

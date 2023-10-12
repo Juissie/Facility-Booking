@@ -35,28 +35,5 @@ public class UserController {
         User user = userService.getUser(userId);
         return ResponseEntity.ok(user);
     }
-
-    @GetMapping("/register")
-    public String getRegisterPage() {
-        return "register_page";
-    }
-
-    @PostMapping("/register")
-    public void registerUser(@RequestBody User user) {
-        userService.registerUser(user);
-    }
-
-    @GetMapping("/login")
-    public String getLoginPage() {
-        return "login_page";
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody User user)
-    {
-        LoginResponse loginResponse = userService.loginUser(user);
-        System.out.println("passed");
-        return ResponseEntity.ok(loginResponse);
-    }
 }
 
