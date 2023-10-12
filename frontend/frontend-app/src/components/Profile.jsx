@@ -6,21 +6,34 @@ import axios from 'axios';
 function Profile() {
   const [profileData, setProfileData] = useState(null);
 
-  useEffect(() => {
     // Retrieve the jwtResponse from localStorage
-    const jwtResponse = JSON.parse(localStorage.getItem('jwtResponse'));
+    useEffect(() => {
+      const jwtResponse = JSON.parse(localStorage.getItem('jwtResponse'));
+      if (jwtResponse) {
+        // Use the data from jwtResponse to populate the profileData
+        setProfileData({
+          username: jwtResponse.username,
+          email: jwtResponse.email || 'Admin@admin.com',
+          creditScore: jwtResponse.creditScore || 100, // Hardcoded value for creditScore
+          profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQOzLVWtuIaOlLcxtYyFdnQVDUHcGKTaCRQ&usqp=CAU', // Hardcoded URL for profile picture
+        });
+      }
+
+      // console.log(jwtResponse.accessToken)
+
+      const userId = jwtResponse.id;
+      axios.get(`http://localhost:8080/api/user/details/${userId}`,
+          { headers:
+                {
+                  Authorization : jwtResponse.accessToken,
+                  withCredentials:true
+                }
+          }) .then(res => console.log(res))
+    }, []);
 
     // Check if jwtResponse is available
-    if (jwtResponse) {
-      // Use the data from jwtResponse to populate the profileData
-      setProfileData({
-        username: jwtResponse.username,
-        email: jwtResponse.email || 'Admin@admin.com',
-        creditScore: jwtResponse.creditScore || 100, // Hardcoded value for creditScore
-        profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQOzLVWtuIaOlLcxtYyFdnQVDUHcGKTaCRQ&usqp=CAU', // Hardcoded URL for profile picture
-      });
-    }
-  }, []);
+
+
 
   return (
     <div>
