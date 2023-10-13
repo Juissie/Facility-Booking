@@ -1,5 +1,6 @@
 package com.example.cs203g1t3.controller;
 
+import com.example.cs203g1t3.models.ProfileUserDetails;
 import com.example.cs203g1t3.models.User;
 import com.example.cs203g1t3.services.UserService;
 import com.example.cs203g1t3.DTO.UserDTO;
@@ -34,8 +35,9 @@ public class UserController {
 
     @GetMapping("/details/{userId}")
     public ResponseEntity<?> getUserProfile(@PathVariable Long userId) {
-        User user = userService.getUser(userId);
-        return ResponseEntity.ok(user);
+//        User user = userService.getUser(userId);
+        ProfileUserDetails profileUserDetails = userService.getProfileDetails(userId);
+        return ResponseEntity.ok(profileUserDetails);
     }
 }
 

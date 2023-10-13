@@ -1,5 +1,6 @@
 package com.example.cs203g1t3.services;
 
+import com.example.cs203g1t3.models.ProfileUserDetails;
 import com.example.cs203g1t3.models.User;
 import com.example.cs203g1t3.DTO.LoginDTO;
 import com.example.cs203g1t3.DTO.UserDTO;
@@ -9,6 +10,7 @@ import com.example.cs203g1t3.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,6 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
 
     private final UserRepository userRepository;
 
@@ -41,33 +42,6 @@ public class UserService {
         return user.get();
     }
 
-    // Old implementation 
-        // public User registerCustomer(String username, String password, String email) {
-        //     if (username == null  || password == null) {
-        //         return null;
-        //     } else {
-        //         User customer = new User();
-        //         customer.setUsername(username);
-        //         customer.setPassword(password);
-        //         customer.setEmail(email);
-        //         return userRepository.save(customer);
-        //     }
-        // }
-
-    public void registerUser(User user) {
-        Optional<User> usernameOptional = userRepository.findByUsername(user.getUsername());
-        Optional<User> emailOptional = userRepository.findByEmail(user.getEmail());
-        if (usernameOptional.isPresent()) {
-            throw new IllegalStateException("Username taken");
-        } else if (emailOptional.isPresent()) {
-            throw new IllegalStateException("Email taken");
-        }
-        //todo: to add when business logic is settled
-        user.setCreditScore(999);
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user); 
-    }
-
     public void deleteUser(Long userId) {
         boolean exists = userRepository.existsById(userId);
         if (!exists) {
@@ -75,11 +49,6 @@ public class UserService {
         }
         userRepository.deleteById(userId);
     }
-
-//    public User authenticate(String name, String password) {
-//        Optional<User> user = userRepository.findByUsernameAndPassword(name, password);
-//        return user.orElse(null);
-//    }
 
     public LoginResponse loginUser(User user) {
         Optional<User> thisUser = userRepository.findByEmail(user.getEmail());
@@ -101,6 +70,12 @@ public class UserService {
         }else {
             return new LoginResponse("Email does not exist", false);
         }
+    }
+
+    public ProfileUserDetails getProfileDetails(Long userId){
+        User user = getUser(userId);
+        ProfileUserDetails profileUserDetails = new ProfileUserDetails(user.getUserID(),user.getUsername(),user.getEmail(),user.getCreditScore());
+        return profileUserDetails;
     }
 
 }
