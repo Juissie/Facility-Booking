@@ -1,16 +1,10 @@
 package com.example.cs203g1t3.services;
 
-import com.example.cs203g1t3.models.ProfileUserDetails;
 import com.example.cs203g1t3.models.User;
-import com.example.cs203g1t3.DTO.LoginDTO;
-import com.example.cs203g1t3.DTO.UserDTO;
 import com.example.cs203g1t3.DTO.LoginResponse;
 import com.example.cs203g1t3.repository.UserRepository;
 
-import lombok.AllArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -70,12 +64,6 @@ public class UserService {
         }else {
             return new LoginResponse("Email does not exist", false);
         }
-    }
-
-    public ProfileUserDetails getProfileDetails(Long userId){
-        User user = getUser(userId);
-        ProfileUserDetails profileUserDetails = new ProfileUserDetails(user.getUserID(),user.getUsername(),user.getEmail(),user.getCreditScore());
-        return profileUserDetails;
     }
 
 }

@@ -17,6 +17,7 @@ function Profile() {
           creditScore: jwtResponse.creditScore || 100, // Hardcoded value for creditScore
           profilePictureUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvQOzLVWtuIaOlLcxtYyFdnQVDUHcGKTaCRQ&usqp=CAU', // Hardcoded URL for profile picture
         });
+
       }
 
       // console.log(jwtResponse.accessToken)
