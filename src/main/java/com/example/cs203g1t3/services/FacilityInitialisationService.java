@@ -23,6 +23,7 @@ public class FacilityInitialisationService {
         LocalTime endTime = LocalTime.of(18, 0);
         badminton.setOpenTime(openTime);
         badminton.setEndTime(endTime);
+        badminton.calculateTimeSlots();
         facilityRepository.save(badminton);
     }
 }

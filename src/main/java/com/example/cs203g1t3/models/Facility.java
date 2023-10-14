@@ -3,6 +3,8 @@ package com.example.cs203g1t3.models;
 import java.time.LocalTime;
 import java.util.*;
 
+import org.springframework.cglib.core.Local;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,11 +50,20 @@ public class Facility {
     public Facility(String facilityType, String description) {
         this.facilityType = facilityType;
         this.description = description;
+
+        
+        //hardcoded timings for testing 
+        // openTime = LocalTime.of(8, 0, 0);
+        // endTime = LocalTime.of(10, 0, 0);
+        calculateTimeSlots();
     }
 
     public int calculateTimeSlots(){
         //takes the opentime and endtime of the the facility and breaks them up into timeslots of 30min each
         //returns the number of timeslots
+        if(openTime == null || endTime == null){
+            return 0;
+        }
         timeSlots = new ArrayList<>();
         LocalTime tempOpen = openTime;
         LocalTime tempEnd = endTime;
@@ -62,5 +73,19 @@ public class Facility {
             tempOpen = tempOpen.plusMinutes(30);
         }
         return timeSlots.size();
+    }
+
+    public void updateTimeSlot(Booking booking){
+        LocalTime start = booking.getOpenTime();
+        LocalTime end = booking.getEndTime();
+
+        List<LocalTime> bookingTimes = new ArrayList<>();
+        while(start.isBefore(end)){
+            bookingTimes.add(start);
+            start = start.plusMinutes(30);
+        }
+        for(LocalTime time:bookingTimes){
+            timeSlots.remove(time);
+        }
     }
 }

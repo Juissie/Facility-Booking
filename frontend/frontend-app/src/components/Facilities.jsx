@@ -27,6 +27,12 @@ function FacilityList() {
             <strong>Facility Type:</strong> {facility.facilityType}
             <br />
             <strong>Description:</strong> {facility.description}
+            <br />
+            <ul>
+              {facility.timeSlots.map((timeSlot, index) => (
+                <li key={index}>{timeSlot}</li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>
