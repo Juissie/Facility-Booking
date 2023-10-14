@@ -5,7 +5,7 @@ import com.example.cs203g1t3.services.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
-
+import com.example.cs203g1t3.models.Booking;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,5 +49,23 @@ public class FacilityController {
         return ResponseEntity.ok(facility);
     }
 
+    @PostMapping("/{facilityId}")
+    public ResponseEntity<?> updateFacilityTiming(@PathVariable Long facilityId, @RequestBody Booking booking){
+        Facility facility = facilityService.updFacilityTiming(facilityId, booking);
+        if (facility == null) {
+            return new ResponseEntity<>("Facility not found", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(facility);
+
+    }
+
+    @GetMapping("/{facilityId}/timeslots")
+    public ResponseEntity<?> getTimeslotOfFacility(@PathVariable Long facilityId) {
+        Facility facility = facilityService.getFacility(facilityId);
+        if (facility == null) {
+            return new ResponseEntity<>("Facility not found", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(facility.getTimeSlots());
+    }
     // Include PUT and DELETE methods to update and delete facilities respectively.
 }

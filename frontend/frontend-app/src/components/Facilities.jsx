@@ -28,11 +28,11 @@ function FacilityList() {
             <br />
             <strong>Description:</strong> {facility.description}
             <br />
-            <ul>
+            {/* <ul>
               {facility.timeSlots.map((timeSlot, index) => (
                 <li key={index}>{timeSlot}</li>
               ))}
-            </ul>
+            </ul> */}
           </li>
         ))}
       </ul>
