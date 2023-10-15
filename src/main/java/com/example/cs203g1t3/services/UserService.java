@@ -66,4 +66,23 @@ public class UserService {
         }
     }
 
+    public void changePassword(User user, String newPassword) {
+        // Encode the new password
+        String encodedPassword = encoder.encode(newPassword);
+        
+        // Save the updated user with the new password
+        userRepository.updatePassword(user.getUserID(), encodedPassword);
+    }
+
+    public boolean checkPassword(User user, String password) {
+        // Encode the password
+        String encodedPassword = encoder.encode(password);
+        // Retrieve the id
+        String username = user.getUsername();
+        // Check if the id and password matches that of the database
+        Optional<User> userOptional = userRepository.findByUsernameAndPassword(username, encodedPassword);
+        // Return whether it exist
+        return userOptional.isPresent();
+    }
+
 }
