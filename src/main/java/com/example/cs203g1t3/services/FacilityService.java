@@ -87,16 +87,19 @@ public class FacilityService {
     public void updateTimeSlot(Long facilityId, Booking booking){
         Facility facility = facilities.findById(facilityId).orElse(null);
         if (facility != null) {
+            List<LocalTime> allTimeSlots = facility.getTimeSlots();
             LocalTime start = booking.getStartTime();
             LocalTime end = booking.getEndTime();
 
-            Set<LocalTime> bookingTimes = new HashSet<>();
+            List<LocalTime> bookingTimes = new ArrayList<>();
             while(start.isBefore(end)){
                 bookingTimes.add(start);
                 start = start.plusMinutes(30);
             }
+
             for(LocalTime time:bookingTimes){
-                facility.getTimeSlots().remove(time);
+                allTimeSlots.remove(time);
+                facility.setTimeSlots(allTimeSlots);
             }
         }
     }

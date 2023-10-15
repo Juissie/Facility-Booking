@@ -131,12 +131,12 @@ GET http://localhost:8080/api/facilities
 ### View bookings for a facility
 GET http://localhost:8080/api/facilities/1/bookings
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5NzM4NDUyMSwiZXhwIjoxNjk3NDcwOTIxfQ.hrz6UADryrCz3qsBYzZ_IaypO5l5b4AxarKX8oH35D8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5NzM4NTAyNCwiZXhwIjoxNjk3NDcxNDI0fQ.4sm44ltqw5FjLE3jniZ7XQZX7v-u_t30Ej5L_ArwCRk
 
 ### Create booking
 POST http://localhost:8080/api/facilities/1/bookings
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5NzM4NDUyMSwiZXhwIjoxNjk3NDcwOTIxfQ.hrz6UADryrCz3qsBYzZ_IaypO5l5b4AxarKX8oH35D8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5NzM4NTAyNCwiZXhwIjoxNjk3NDcxNDI0fQ.4sm44ltqw5FjLE3jniZ7XQZX7v-u_t30Ej5L_ArwCRk
 
 {
     "startTime": "09:00:00",
