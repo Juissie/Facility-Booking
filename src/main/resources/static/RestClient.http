@@ -96,15 +96,14 @@ Content-Type: application/json
     "password": "Pass1234!"
 }
 
-### Register admin
+### Register user
 POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
 {
     "username": "S8217079D",
     "email": "aqqzzq@gmail.com",
-    "password": "Pass1234!",
-    "role": ["admin"]
+    "password": "Pass1234!"
 }
 
 ### Login admin
@@ -112,16 +111,35 @@ POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "S8217079D",
+    "username": "admin",
     "password": "Pass1234!"
 }
 
 ### Add facility
 POST http://localhost:8080/api/facilities
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTODIxNzA3OUQiLCJpYXQiOjE2OTY4Mzg5NDMsImV4cCI6MTY5NjkyNTM0M30.W8TxmQpl-DaMRJI7O7nv5KTMIcAK0BDVMZSl4F1pcrQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5NzM4NDUyMSwiZXhwIjoxNjk3NDcwOTIxfQ.hrz6UADryrCz3qsBYzZ_IaypO5l5b4AxarKX8oH35D8
 
 {
     "facilityType": "FacilityOne",
     "description": "Default Description"
+}
+
+### View facilities
+GET http://localhost:8080/api/facilities
+
+### View bookings for a facility
+GET http://localhost:8080/api/facilities/1/bookings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5NzM4NDUyMSwiZXhwIjoxNjk3NDcwOTIxfQ.hrz6UADryrCz3qsBYzZ_IaypO5l5b4AxarKX8oH35D8
+
+### Create booking
+POST http://localhost:8080/api/facilities/1/bookings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5NzM4NDUyMSwiZXhwIjoxNjk3NDcwOTIxfQ.hrz6UADryrCz3qsBYzZ_IaypO5l5b4AxarKX8oH35D8
+
+{
+    "startTime": "09:00:00",
+    "endTime" : "11:00:00",
+    "dateCreated": "2023-10-15"
 }

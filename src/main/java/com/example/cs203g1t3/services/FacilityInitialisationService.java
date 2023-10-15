@@ -18,11 +18,11 @@ public class FacilityInitialisationService {
     }
 
     public void initialiseFacilities() {
-        Facility badminton = new Facility("Badminton Court", "Opens from 10am to 6pm");
-        LocalTime openTime = LocalTime.of(9, 0);
-        LocalTime endTime = LocalTime.of(18, 0);
-        badminton.setOpenTime(openTime);
-        badminton.setEndTime(endTime);
+        Facility badminton = new Facility("Badminton Court", "Opens from 10am to 6pm", LocalTime.of(9, 0), LocalTime.of(18, 0) );
+        // LocalTime openTime = LocalTime.of(9, 0);
+        // LocalTime closingTime = LocalTime.of(18, 0);
+        // badminton.setOpenTime(openTime);
+        // badminton.setClosingTime(closingTime);
         badminton.calculateTimeSlots();
         facilityRepository.save(badminton);
     }
