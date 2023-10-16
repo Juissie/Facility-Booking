@@ -75,7 +75,9 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/api/auth/refreshtoken").permitAll();
                     auth.requestMatchers("/api/otp/generateOtp/*").permitAll();
                     auth.requestMatchers("/api/otp/validateOtp").permitAll();
+                    auth.requestMatchers("/api/auth/registerBM").permitAll();
                     auth.anyRequest().authenticated();
+                    
                 });
             http.authenticationProvider(authenticationProvider());
 

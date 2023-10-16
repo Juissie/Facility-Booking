@@ -16,6 +16,8 @@ import com.example.cs203g1t3.repository.UserRepository;
 import com.example.cs203g1t3.security.jwt.JwtUtils;
 import com.example.cs203g1t3.services.CustomUserDetails;
 import com.example.cs203g1t3.services.RefreshTokenService;
+import com.example.cs203g1t3.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -44,6 +46,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -100,62 +105,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (!jwtUtils.isValidNric(signUpRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter valid username!"));
-        }
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
-        }
-        if (!jwtUtils.isValidEmail(signUpRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter a valid email!"));
-        }
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-        }
-        if (!jwtUtils.isValidPassword(signUpRequest.getPassword())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Please enter a valid password!"));
-        }
-
-
-
-        // Create new user's account
-        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
-
-        Set<String> strRoles = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-
-                        break;
-                    case "bookingManager":
-                        Role bookingManagerRole = roleRepository.findByName(ERole.ROLE_BOOKINGMANAGER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(bookingManagerRole);
-
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-                }
-            });
-        }
-
-        user.setRoles(roles);
-        userRepository.save(user);
-
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        Role userRole = roleRepository.findByName(ERole.ROLE_USER).get();
+        return userService.registerAccount(signUpRequest, userRole);
     }
 
     @PostMapping("/logout")
@@ -167,15 +118,10 @@ public class AuthController {
     }
 
     @PostMapping("/registerBM")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> createBookingManagerAcc(@Valid @RequestBody SignupRequest signUpRequest) {
-
-        Set<String> role = new HashSet<>();
-        role.add("bookingManager");
-        signUpRequest.setRole(role);
-
-        return registerUser(signUpRequest);
+        Role userRole = roleRepository.findByName(ERole.ROLE_BOOKINGMANAGER).get();
+        return userService.registerAccount(signUpRequest, userRole);
     }
-
     
 }
