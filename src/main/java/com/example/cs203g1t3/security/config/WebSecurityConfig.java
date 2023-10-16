@@ -67,7 +67,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/api/facilities").permitAll();
 //                    auth.requestMatchers(HttpMethod.POST, "/api/facilities").hasRole("ROLE_ADMIN");
 //                    auth.requestMatchers("/home").authenticated();
-                    auth.anyRequest().authenticated();
+                    auth.anyRequest().permitAll();
                 });
             http.authenticationProvider(authenticationProvider());
 

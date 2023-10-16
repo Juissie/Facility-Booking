@@ -17,7 +17,7 @@
     "web-vitals": "2.1.4"
   },
   "scripts": {
-    "dev": "npm install && npm install --save axios && npm i react-router-dom && npm install react-bootstrap bootstrap && npm install react-modal && npm start",
+    "dev": "npm install && npm install --save axios && npm i react-router-dom && npm install react-bootstrap bootstrap && npm start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -40,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

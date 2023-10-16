@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MyNavbar from './NavbarComp';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
-import Modal from 'react-modal';
+import { Modal, Button } from 'react-bootstrap';
 
 function FacilityList() {
   const [facilities, setFacilities] = useState([]);
   const [selectedFacility, setSelectedFacility] = useState(null);
+  const [timeslots, setTimeslots] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
@@ -24,13 +24,23 @@ function FacilityList() {
   // Function to open the modal and set the selected facility
   const openModal = (facility) => {
     setSelectedFacility(facility);
-    setModalIsOpen(true);
+
+    // Fetch timeslots for the selected facility
+    axios.get(`http://localhost:8080/api/facilities/${facility.facilityId}/bookings`)
+      .then((response) => {
+        setTimeslots(response.data);
+        setModalIsOpen(true); // Open the modal
+      })
+      .catch((error) => {
+        console.error("Error fetching timeslots:", error);
+      });
   };
 
   // Function to close the modal
   const closeModal = () => {
     setSelectedFacility(null);
     setModalIsOpen(false);
+    setTimeslots([]);
   };
 
   return (
@@ -39,7 +49,7 @@ function FacilityList() {
       <h1>Facility List</h1>
       <ul>
         {facilities.map((facility) => (
-          <li key={facility.id}>
+          <li key={facility.facilityId}>
             <strong>Facility Type:</strong> {facility.facilityType}
             <br />
             <strong>Description:</strong> {facility.description}
@@ -49,18 +59,28 @@ function FacilityList() {
           </li>
         ))}
       </ul>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Timeslots Modal"
-      >
-        {selectedFacility && (
-          <div>
-            <h2>Timeslots for Facility: {selectedFacility.facilityType}</h2>
-            {/* Fetch and display timeslots for the selected facility here */}
-            <button onClick={closeModal}>Close</button>
-          </div>
-        )}
+
+      <Modal show={modalIsOpen} onHide={closeModal} backdrop="static" keyboard={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Timeslots for Facility: {selectedFacility?.facilityType}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ul>
+          {timeslots.slice(0, -1).map((timeslot, index) => (
+  <li key={index}>
+    {/* Display timeslot details here */}
+    <strong>Start Time:</strong> {timeslot}
+    <br />
+    <strong>End Time:</strong>{" "}
+    {index < timeslots.length - 1 ? timeslots[index + 1] : "N/A"}
+  </li>
+))}
+
+          </ul>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>Close</Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );
