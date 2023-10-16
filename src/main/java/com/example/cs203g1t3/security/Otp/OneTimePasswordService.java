@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 @Service
 public class OneTimePasswordService {
 
-    private final Long expiryInterval = 5L * 60 * 1000;
+    private final Long expiryInterval = 1L * 60 * 1000;
 
     private final OneTimePasswordRepository oneTimePasswordRepository;
 
@@ -49,8 +49,10 @@ public class OneTimePasswordService {
 
         oneTimePassword.setOneTimePasswordCode(createRandomOneTimePassword().get());
         oneTimePassword.setExpires(new Date(System.currentTimeMillis() + expiryInterval));
+
         try{
             User user = userRepository.findById(userId).get();
+            oneTimePassword.setUser(user);
             user.setOneTimePassword(oneTimePassword);
             oneTimePasswordRepository.save(oneTimePassword);
         } catch (NoSuchElementException e){
@@ -79,7 +81,10 @@ public class OneTimePasswordService {
         //Validate the code and checks for expiry
         if(oneTimePasswordCode == oneTimePassword.getOneTimePasswordCode()){
             System.out.println("The OTP is correct!");
-            return oneTimePassword.getExpires().before(now);
+            if(oneTimePassword.getExpires().compareTo(now) > 0){
+//                oneTimePasswordRepository.
+                return true;
+            }
         }
         return false;
     }

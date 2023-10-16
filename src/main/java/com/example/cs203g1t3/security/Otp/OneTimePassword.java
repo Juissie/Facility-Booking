@@ -1,9 +1,7 @@
 package com.example.cs203g1t3.security.Otp;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.cs203g1t3.models.User;
+import jakarta.persistence.*;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -23,4 +21,7 @@ public class OneTimePassword {
     private int oneTimePasswordCode;
     @NotBlank
     private Date expires;
+    @OneToOne
+    @JoinColumn(name="userid")
+    private User user;
 }

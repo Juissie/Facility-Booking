@@ -9,4 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface OneTimePasswordRepository extends JpaRepository<OneTimePassword, Long> {
+//    void deleteOneTimePassword
 }

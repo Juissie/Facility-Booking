@@ -56,7 +56,7 @@ public class User{
 //    private boolean isMember;
 
     //Email One Time Password
-    @OneToOne
+    @OneToOne(mappedBy="user",cascade=CascadeType.ALL)
     private OneTimePassword oneTimePassword;
 
 

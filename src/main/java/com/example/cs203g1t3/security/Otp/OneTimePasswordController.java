@@ -3,13 +3,8 @@ package com.example.cs203g1t3.security.Otp;
 
 
 import com.example.cs203g1t3.exception.InvalidOtpException;
-import com.example.cs203g1t3.exception.NoSuchUserFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/otp/")
@@ -27,10 +22,10 @@ public class OneTimePasswordController {
         oneTimePasswordService.generateOneTimePassword(userId);
     }
 
-        @PostMapping("/validateOtp/{userId}")
-    private Boolean validateOtp(@PathVariable Long userId, @RequestBody String otp){
-            System.out.println(otp);
-        int otpInt = Integer.parseInt(otp);
+        @PostMapping("/validateOtp")
+    private Boolean validateOtp(@RequestBody OneTimePasswordResponse oneTimePasswordResponse){
+        Long userId = oneTimePasswordResponse.getUserId();
+        int otpInt = oneTimePasswordResponse.getOneTimePasswordCode();
             System.out.println(otpInt);
         try{
             System.out.println("Hi!!");
