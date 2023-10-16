@@ -167,7 +167,7 @@ public class AuthController {
     }
 
     @PostMapping("/registerBM")
-    @PreAuthorize("hasRole('ROLE_BOOKINGMANAGER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> createBookingManagerAcc(@Valid @RequestBody SignupRequest signUpRequest) {
 
         Set<String> role = new HashSet<>();

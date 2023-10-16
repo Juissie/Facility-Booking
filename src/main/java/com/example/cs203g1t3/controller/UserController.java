@@ -1,6 +1,7 @@
 package com.example.cs203g1t3.controller;
 
 import com.example.cs203g1t3.models.User;
+import com.example.cs203g1t3.security.Otp.OneTimePasswordService;
 import com.example.cs203g1t3.services.UserService;
 import com.example.cs203g1t3.payload.request.ChangePasswordRequest;
 
@@ -15,11 +16,14 @@ public class UserController {
 
     public UserService userService;
 
+    private OneTimePasswordService oneTimePasswordService;
+
 //    private BCryptPasswordEncoder encoder;
 
     @Autowired
-    public UserController(UserService us) {
+    public UserController(UserService us,OneTimePasswordService oneTimePasswordService) {
         this.userService = us;
+        this.oneTimePasswordService = oneTimePasswordService;
     }
 
     // Testing to get users -> Send a GET request here to check it's working.
