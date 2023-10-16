@@ -80,14 +80,13 @@ Content-Type: application/json
 }
 
 ### Register booking manager
-POST http://localhost:8080/api/auth/register
+POST http://localhost:8080/api/auth/registerBM
 Content-Type: application/json
 
 {
-    "username": "Z9835241A",
+    "username": "T0127510G",
     "email": "zqqzzq@gmail.com",
-    "password": "Pass1234!",
-    "role": ["bookingManager"]
+    "password": "B@llsD33p69"
 }
 
 
