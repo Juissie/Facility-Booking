@@ -1,6 +1,7 @@
 package com.example.cs203g1t3.services;
 
 import com.example.cs203g1t3.models.User;
+import com.example.cs203g1t3.security.Otp.OneTimePassword;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -28,13 +30,17 @@ public class CustomUserDetails implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
+    private OneTimePassword oneTimePassword;
+
+
     public CustomUserDetails(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities,OneTimePassword oneTimePassword) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.oneTimePassword = oneTimePassword;
     }
 
     public static CustomUserDetails build(User user) {
@@ -46,7 +52,8 @@ public class CustomUserDetails implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
+                authorities,
+                user.getOneTimePassword());
     }
 
     @Override

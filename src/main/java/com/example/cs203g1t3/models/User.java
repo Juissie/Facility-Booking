@@ -1,8 +1,11 @@
 package com.example.cs203g1t3.models;
 
+import com.example.cs203g1t3.security.Otp.OneTimePassword;
+import com.example.cs203g1t3.security.Otp.OneTimePasswordRepository;
 import jakarta.persistence.*;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,12 +55,10 @@ public class User{
 //    private int noOfBookingsLeft;
 //    private boolean isMember;
 
-    //Email OTP variables
-    private static final long OTP_VALID_DURATION = 5 * 60 * 1000;   // 5 minutes
-    @Column(name = "one_time_password")
-    private String oneTimePassword;
-    @Column(name = "otp_requested_time")
-    private Date otpRequestedTime;
+    //Email One Time Password
+    @OneToOne
+    private OneTimePassword oneTimePassword;
+
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -67,22 +68,6 @@ public class User{
 
     public Long getId() {
         return userID;
-    }
-
-    public boolean isOTPRequired() {
-        if (this.getOneTimePassword() == null) {
-            return false;
-        }
-
-        long currentTimeInMillis = System.currentTimeMillis();
-        long otpRequestedTimeInMillis = this.otpRequestedTime.getTime();
-
-        if (otpRequestedTimeInMillis + OTP_VALID_DURATION < currentTimeInMillis) {
-            // OTP expires
-            return false;
-        }
-
-        return true;
     }
 
 

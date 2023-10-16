@@ -4,12 +4,19 @@ import com.example.cs203g1t3.models.User;
 import com.example.cs203g1t3.DTO.LoginResponse;
 import com.example.cs203g1t3.repository.UserRepository;
 
+import jakarta.mail.internet.MimeMessage;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.messaging.MessagingException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,26 +51,48 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public LoginResponse loginUser(User user) {
-        Optional<User> thisUser = userRepository.findByEmail(user.getEmail());
-        if (thisUser.isPresent()) {
-            User currUser = thisUser.get();
-            String password = user.getPassword();
-            String encodedPassword = currUser.getPassword();
-            Boolean isPwdRight = encoder.matches(password, encodedPassword);
-            if (isPwdRight) {
-                Optional<User> employee = userRepository.findByEmailAndPassword(user.getEmail(), encodedPassword);
-                if (employee.isPresent()) {
-                    return new LoginResponse("Login Success", true);
-                } else {
-                    return new LoginResponse("Login Failed", false);
-                }
-            } else {
-                return new LoginResponse("Password does not match", false);
-            }
-        }else {
-            return new LoginResponse("Email does not exist", false);
-        }
-    }
+//    public void generateOneTimePassword(User user)
+//            throws UnsupportedEncodingException, MessagingException {
+//        String OTP = RandomStringUtils.randomAlphabetic(6);
+//        String encodedOTP = encoder.encode(OTP);
+//
+//        user.setOneTimePassword(encodedOTP);
+//        user.setOtpRequestedTime(new Date());
+//
+//        userRepository.save(user);
+//
+//        sendOTPEmail(user, OTP);
+//    }
+//
+//    public void sendOTPEmail(User user, String OTP)
+//            throws UnsupportedEncodingException, MessagingException, jakarta.mail.MessagingException {
+//        MimeMessage message = mailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(message);
+//
+//        helper.setFrom("contact@shopme.com", "Shopme Support");
+//        helper.setTo(user.getEmail());
+//
+//        String subject = "Here's your One Time Password (OTP) - Expire in 5 minutes!";
+//
+//        String content = "<p>Hello " + user.getUsername() + "</p>"
+//                + "<p>For security reason, you're required to use the following "
+//                + "One Time Password to login:</p>"
+//                + "<p><b>" + OTP + "</b></p>"
+//                + "<br>"
+//                + "<p>Note: this OTP is set to expire in 5 minutes.</p>";
+//
+//        helper.setSubject(subject);
+//
+//        helper.setText(content, true);
+//
+//        mailSender.send(message);
+//    }
+//
+//    public void clearOTP(User user) {
+//        user.setOneTimePassword(null);
+//        user.setOtpRequestedTime(null);
+//        userRepository.save(user);
+//    }
+
 
 }
