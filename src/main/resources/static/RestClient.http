@@ -8,7 +8,7 @@ POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "T1234567",
+    "username": "T0127510G",
     "email": "jevontanjinghong@gmail.com",
     "password": "Testing@123"
 }
@@ -60,8 +60,8 @@ POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "T1234467Q",
-    "password": "Pass1234!"
+    "username": "admin",
+    "password": "B@llsD33p69"
 }
 
 ### Authentication success
@@ -69,20 +69,24 @@ GET http://localhost:8080/api/test/user
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUMTIzNDQ2N1EiLCJpYXQiOjE2OTU2MzI5MDgsImV4cCI6MTY5NTcxOTMwOH0.oudhqvlzAj1xN9I8kgglmEzIZ4HGeCNRgX9UnyUdrkg
 
-{
-
-
-}
-
-### Register booking manager
-POST http://localhost:8080/api/auth/register
+###
+POST http://localhost:8080/api/user/2
 Content-Type: application/json
 
 {
-    "username": "Z9835241A",
+    "currentPassword": "Testing@123",
+    "newPassword": "B@llsD33p69",
+    "confirmPassword": "Testing@123"
+}
+
+### Register booking manager
+POST http://localhost:8080/api/auth/registerBM
+Content-Type: application/json
+
+{
+    "username": "T0127510G",
     "email": "zqqzzq@gmail.com",
-    "password": "Pass1234!",
-    "role": ["bookingManager"]
+    "password": "B@llsD33p69"
 }
 
 
@@ -92,8 +96,8 @@ POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "Z9835241A",
-    "password": "Pass1234!"
+    "username": "T0127510G",
+    "password": "B@llsD33p69"
 }
 
 ### Register admin
