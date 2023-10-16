@@ -77,10 +77,8 @@ public class OneTimePasswordService {
         User user = userRepository.findById(userId).get();
         OneTimePassword oneTimePassword = user.getOneTimePassword();
         Date now = new Date(System.currentTimeMillis());
-        System.out.println("The username is " + user.getUsername());
         //Validate the code and checks for expiry
         if(oneTimePasswordCode == oneTimePassword.getOneTimePasswordCode()){
-            System.out.println("The OTP is correct!");
             if(oneTimePassword.getExpires().compareTo(now) > 0){
 //                oneTimePasswordRepository.
                 return true;

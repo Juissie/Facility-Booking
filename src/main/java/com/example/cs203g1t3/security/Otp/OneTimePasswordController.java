@@ -28,7 +28,6 @@ public class OneTimePasswordController {
         int otpInt = oneTimePasswordResponse.getOneTimePasswordCode();
             System.out.println(otpInt);
         try{
-            System.out.println("Hi!!");
             return oneTimePasswordService.checkOneTimePassword(userId,otpInt);
         } catch (RuntimeException e){
             throw new InvalidOtpException("OTP is not valid!");

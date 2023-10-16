@@ -30,7 +30,7 @@ public class CustomUserDetails implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    private OneTimePassword oneTimePassword;
+    private final OneTimePassword oneTimePassword;
 
 
     public CustomUserDetails(Long id, String username, String email, String password,

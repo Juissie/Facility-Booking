@@ -73,8 +73,9 @@ public class WebSecurityConfig {
 //                    auth.requestMatchers("/api/facilities").permitAll();
 //                    auth.requestMatchers(HttpMethod.POST, "/api/facilities").hasRole("ROLE_ADMIN");
                     auth.requestMatchers("/api/auth/refreshtoken").permitAll();
-                    auth.requestMatchers("/api/otp/generateOtp","/api/otp/validateOtp").permitAll();
-                    auth.anyRequest().permitAll();
+                    auth.requestMatchers("/api/otp/generateOtp/*").permitAll();
+                    auth.requestMatchers("/api/otp/validateOtp").permitAll();
+                    auth.anyRequest().authenticated();
                 });
             http.authenticationProvider(authenticationProvider());
 
