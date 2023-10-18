@@ -101,6 +101,8 @@ public class FacilityService {
                 allTimeSlots.remove(time);
                 facility.setTimeSlots(allTimeSlots);
             }
+
+            facilities.save(facility);
         }
     }
 

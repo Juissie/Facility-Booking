@@ -76,7 +76,7 @@ public class BookingController {
         if (facilityService.getFacility(facilityId) == null) {
             throw new FacilityNotFoundException(facilityId);
         }
-        Booking booking = bookingService.updateBooking(bookingId, updatedBooking);
+        Booking booking = bookingService.updateBooking(facilityId,bookingId, updatedBooking);
         if (booking == null) {
             throw new BookingNotFoundException(bookingId);
         }
