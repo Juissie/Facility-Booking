@@ -1,5 +1,6 @@
 package com.example.cs203g1t3.services;
 
+import com.example.cs203g1t3.exceptions.*;
 import com.example.cs203g1t3.models.Booking;
 import com.example.cs203g1t3.models.Facility;
 import com.example.cs203g1t3.repository.BookingRepository;
@@ -44,7 +45,7 @@ public class BookingService {
         Booking booking = bookings.findById(bookingId).orElse(null);
         //scuffed code
         if(booking == null){      //if booking not found
-            return null;
+            throw new BookingNotFoundException(bookingId);
         }
 
         List<Booking> allBookings = getAllBookings();

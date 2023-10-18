@@ -51,8 +51,12 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<Booking> createBooking(@PathVariable Long facilityId, @Valid @RequestBody Booking booking) {
-        if (facilityService.getFacility(facilityId) == null) {
+        Facility facility = facilityService.getFacility(facilityId);
+        if (facility == null) {
             throw new FacilityNotFoundException(facilityId);
+        }
+        if(!bookingService.isValidBooking(booking.getStartTime(),booking.getEndTime(),facility)){
+            throw new RuntimeException("Invalid booking "+ booking.getBookingId());  //
         }
         Booking newBooking = bookingService.createBooking(booking);
         facilityService.updateTimeSlot(facilityId, newBooking);
