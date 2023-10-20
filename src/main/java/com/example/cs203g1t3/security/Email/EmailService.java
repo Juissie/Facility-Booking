@@ -1,28 +1,12 @@
 package com.example.cs203g1t3.security.Email;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+public interface EmailService {
 
-@Service
-public class EmailService {
+    // Method
+    // To send a simple email
+    String sendSimpleMail(EmailDetails details);
 
-    @Autowired
-    private JavaMailSender javaMailSender;
-
-    public void sendOtpMessage(String to, String subject, String message) throws MessagingException {
-
-        MimeMessage msg = javaMailSender.createMimeMessage();
-
-        MimeMessageHelper helper = new MimeMessageHelper(msg, true);
-
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText(message, true);
-        javaMailSender.send(msg);
-    }
-
+    // Method
+    // To send an email with attachment
+    String sendMailWithAttachment(EmailDetails details);
 }

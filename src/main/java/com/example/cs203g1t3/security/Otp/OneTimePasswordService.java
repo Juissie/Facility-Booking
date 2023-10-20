@@ -3,12 +3,15 @@ package com.example.cs203g1t3.security.Otp;
 import com.example.cs203g1t3.exception.NoSuchUserFoundException;
 import com.example.cs203g1t3.models.User;
 import com.example.cs203g1t3.repository.UserRepository;
+import com.example.cs203g1t3.security.Email.EmailDetails;
+import com.example.cs203g1t3.security.Email.EmailServiceImpl;
 import com.example.cs203g1t3.security.Otp.OneTimePassword;
 import com.example.cs203g1t3.security.Otp.OneTimePasswordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -26,11 +29,14 @@ public class OneTimePasswordService {
 
     private final static Integer LENGTH = 6;
 
+    private final EmailServiceImpl emailService;
+
 
     @Autowired
-    public OneTimePasswordService(OneTimePasswordRepository oneTimePasswordRepository, UserRepository userRepository) {
+    public OneTimePasswordService(OneTimePasswordRepository oneTimePasswordRepository, UserRepository userRepository,EmailServiceImpl emailService) {
         this.oneTimePasswordRepository = oneTimePasswordRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     //Clear any existing one time passwords
@@ -49,15 +55,21 @@ public class OneTimePasswordService {
 
         oneTimePassword.setOneTimePasswordCode(createRandomOneTimePassword().get());
         oneTimePassword.setExpires(new Date(System.currentTimeMillis() + expiryInterval));
-
+        User user;
         try{
-            User user = userRepository.findById(userId).get();
+            user = userRepository.findById(userId).get();
             oneTimePassword.setUser(user);
             user.setOneTimePassword(oneTimePassword);
             oneTimePasswordRepository.save(oneTimePassword);
         } catch (NoSuchElementException e){
             throw new NoSuchUserFoundException("No Such User Found!");
         }
+        String emailMessage = "Hello this is your One Time Password:\n\n" + oneTimePassword.getOneTimePasswordCode()
+                + "\n\n Thank you!\nDownForSports";
+        EmailDetails emailDetails = new EmailDetails();
+        emailDetails.setRecipient(user.getEmail());
+        emailDetails.setMsgBody(emailMessage);
+        emailService.sendSimpleMail(emailDetails);
     }
     //Supply generateOneTimePassword with LENGTH = 6 code
     public static Supplier<Integer> createRandomOneTimePassword() {
